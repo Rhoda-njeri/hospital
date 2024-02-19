@@ -8,7 +8,7 @@
           @click="rail = false"
         >
           <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+            prepend-avatar="https://t3.ftcdn.net/jpg/00/45/20/70/240_F_45207005_oWfbp8uUsuEV74nNLbGS4HyrybFXQek4.jpg"
             title="Neema Hospital"
             nav
           >
@@ -34,7 +34,7 @@
       </v-layout>
     </v-card>
   </template>
-  <script>
+  <script lang="ts">
     export default {
       data () {
         return {

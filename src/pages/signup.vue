@@ -77,6 +77,8 @@
     </div>
   </template>
   <script  lang="ts">
+  import{ push,ref } from "firebase/database"
+  import {fireDb} from "@/utils/constants"
   import { defineComponent } from 'vue';
   
   
@@ -113,7 +115,12 @@
             return
           }
           
-          
+          let user={
+            fullname:this.fullname,
+            email:this.email,
+            password:this.password,
+          }
+          push(ref(fireDb,"users/"),user)
           
                 this.$router.push('/lögin');
             

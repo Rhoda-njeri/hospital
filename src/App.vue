@@ -7,5 +7,8 @@
 </template>
 
 <script lang="ts" setup>
+import { setupApp } from './helper/firebaseHandler';
+
+setupApp()
   //
 </script>
