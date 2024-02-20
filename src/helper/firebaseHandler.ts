@@ -8,7 +8,6 @@
 import {setFireDb} from "@/utils/constants";
 import {getDatabase} from "firebase/database";
 import {initializeApp} from "firebase/app";
-
 export function setupApp(): void {
     const firebaseConfig = {
         apiKey: "AIzaSyCkMLX9t1LwM4bw0HJUJ2e4ijYqb8LpG2g",
