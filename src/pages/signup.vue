@@ -5,14 +5,14 @@
         max-width="228"
         src="https://t3.ftcdn.net/jpg/00/45/20/70/240_F_45207005_oWfbp8uUsuEV74nNLbGS4HyrybFXQek4.jpg"
       ></v-img>
-  
-  
+
+
       <v-card
         class="mx-auto pa-12 pb-8"
         elevation="8"
         max-width="448"
         rounded="lg">
-        
+
         <v-text-field
           density="compact"
           v-model="fullname"
@@ -25,8 +25,8 @@
           placeholder="Email address"
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"></v-text-field>
-  
-  
+
+
         <v-text-field
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
@@ -52,8 +52,8 @@
             href="#"
             rel="noopener noreferrer"
             target="_blank">{{ message }}</a>
-  
-  
+
+
         <v-btn
           block
           class="mb-8"
@@ -64,7 +64,7 @@
         >
           Register
         </v-btn>
-  
+
         <v-card-text class="text-center">
           <RouterLink
             class="text-blue text-decoration-none"
@@ -80,15 +80,15 @@
   import{ push,ref } from "firebase/database"
   import {fireDb} from "@/utils/constants"
   import { defineComponent } from 'vue';
-  
-  
+
+
    export default defineComponent( {
       data () {
         return {
           message:"",
         visible: false,
-        fullname: "", 
-        email: "", 
+        fullname: "",
+        email: "",
         password:"",
         confirm_password:""
       }},
@@ -114,17 +114,17 @@
             this.message="password does not match"
             return
           }
-          
+
           let user={
             fullname:this.fullname,
             email:this.email,
             password:this.password,
           }
           push(ref(fireDb,"users/"),user)
-          
-                this.$router.push('/lögin');
-            
+
+                this.$router.push('/login');
+
         }
       },
     })
-  </script>  
+  </script>
