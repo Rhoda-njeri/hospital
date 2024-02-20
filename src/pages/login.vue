@@ -100,11 +100,3 @@ import { RouterLink } from 'vue-router';
     components: { RouterLink }
 })
   </script>
-  
-    
-      
-    
-  
-  
-  
-  
