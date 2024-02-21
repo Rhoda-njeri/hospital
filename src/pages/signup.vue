@@ -26,6 +26,20 @@
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"></v-text-field>
 
+          <v-text-field
+          density="compact"
+          v-model="age"
+          placeholder="Age"
+          prepend-inner-icon="mdi-calendar"
+          variant="outlined"></v-text-field>
+
+          <v-text-field
+          density="compact"
+          v-model="location"
+          placeholder="Location"
+          prepend-inner-icon="mdi-pin"
+          variant="outlined"></v-text-field>
+
 
         <v-text-field
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -88,14 +102,25 @@
           message:"",
         visible: false,
         fullname: "",
+        age:"",
         email: "",
         password:"",
-        confirm_password:""
+        confirm_password:"",
+        location:"",
+        
       }},
       methods:{
         login(){
           if(this.fullname ==""){
             this.message="fullname cannot be blank"
+            return
+          }
+          if(this.age==""){
+            this.message="age cannot be blank"
+            return
+          }
+          if(this.location==""){
+            this.message="location cannot be blank"
             return
           }
           if(this.email == ""){
@@ -114,11 +139,13 @@
             this.message="password does not match"
             return
           }
-
+           
           let user={
             fullname:this.fullname,
             email:this.email,
             password:this.password,
+            age:this.age,
+            location:this.location
           }
           push(ref(fireDb,"users/"),user)
 
