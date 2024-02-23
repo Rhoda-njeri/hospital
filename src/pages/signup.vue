@@ -5,8 +5,6 @@
       max-width="228"
       src="https://t3.ftcdn.net/jpg/00/45/20/70/240_F_45207005_oWfbp8uUsuEV74nNLbGS4HyrybFXQek4.jpg"
     ></v-img>
-
-
     <v-card
       class="mx-auto pa-12 pb-8"
       elevation="8"
@@ -51,6 +49,7 @@
         variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
+      
       <v-text-field
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
@@ -83,7 +82,6 @@
           Have account Log in
           <v-icon icon="mdi-chevron-right"></v-icon>
         </RouterLink>
-<<<<<<< HEAD
         </v-card-text>
       </v-card>
     </div>
@@ -138,6 +136,7 @@
             return
           }
            
+          //user object
           let user={
             fullname:this.fullname,
             email:this.email,
@@ -145,65 +144,11 @@
             age:this.age,
             location:this.location
           }
+          //inserting user to firebase db
           push(ref(fireDb,"users/"),user)
-
-                this.$router.push('/login');
+          this.$router.push('/login');
 
         }
       },
     })
   </script>
-=======
-      </v-card-text>
-    </v-card>
-  </div>
-</template>
-<script lang="ts">
-import {push, ref} from "firebase/database"
-import {fireDb} from "@/utils/constants"
-import {defineComponent} from 'vue';
-export default defineComponent({
-  data() {
-    return {
-      message: "",
-      visible: false,
-      fullname: "",
-      email: "",
-      password: "",
-      confirm_password: ""
-    }
-  },
-  methods: {
-    login() {
-      if (this.fullname == "") {
-        this.message = "fullname cannot be blank"
-        return
-      }
-      if (this.email == "") {
-        this.message = "email cannot be blank"
-        return
-      }
-      if (this.password == "") {
-        this.message = "password cannot be blank"
-        return
-      }
-      if (this.confirm_password == "") {
-        this.message = "password cannot be blank "
-        return
-      }
-      if (this.password != this.confirm_password) {
-        this.message = "password does not match"
-        return
-      }
-      let user = {
-        fullname: this.fullname,
-        email: this.email,
-        password: this.password,
-      }
-      push(ref(fireDb, "users/"), user)
-      this.$router.push('/login');
-    }
-  },
-})
-</script>
->>>>>>> 921a6f5b54f2f5f7040981df91627f727fa65e3c

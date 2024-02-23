@@ -49,7 +49,7 @@
           size="large"
           @click="login"
           variant="tonal"
-        >
+          >
           Log In
         </v-btn>
   
@@ -65,7 +65,9 @@
     </div>
   </template>
   <script  lang="ts">
-  import { getMaxListeners } from 'events';
+  import { fireDb } from '@/utils/constants';
+import { getMaxListeners } from 'events';
+import { getDatabase, ref, onValue } from "firebase/database";
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
   
@@ -81,6 +83,7 @@ import { RouterLink } from 'vue-router';
     },
     methods: {
         login() {
+          let userInfo:any = undefined
             if (this.email == "") {
                 this.message = "email cannot be blank";
                 return;
@@ -89,12 +92,35 @@ import { RouterLink } from 'vue-router';
                 this.message = "password cannot be blank";
                 return;
             }
-            if (this.email == "admin@gmail.com" && this.password == "password") {
-                this.$router.push('/dashboard');
-            }
-            else {
-                this.message = "invalid name or password";
-            }
+            
+            onValue(ref(fireDb, '/users'), (snapshot) => {
+              snapshot.forEach((user) => {
+                if(user.val().email==this.email){
+                  userInfo=user.val()
+
+                }
+              })
+              if(userInfo ==undefined){
+                this.message ="email not found in db"
+                return;
+              }
+              if(userInfo.email ==this.email && userInfo.password==this.password){
+
+                this.message="take user to dashboard all is ok"
+
+                this.$router.push({ name: 'dashboard'})
+
+
+              }else{
+                this.message="invalid password"
+              }
+
+          }, {
+            onlyOnce: true
+          });
+            
+
+         
         }
     },
     components: { RouterLink }
