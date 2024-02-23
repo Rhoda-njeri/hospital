@@ -24,19 +24,19 @@
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"></v-text-field>
 
-          <v-text-field
-          density="compact"
-          v-model="age"
-          placeholder="Age"
-          prepend-inner-icon="mdi-calendar"
-          variant="outlined"></v-text-field>
+      <v-text-field
+        density="compact"
+        v-model="age"
+        placeholder="Age"
+        prepend-inner-icon="mdi-calendar"
+        variant="outlined"></v-text-field>
 
-          <v-text-field
-          density="compact"
-          v-model="location"
-          placeholder="Location"
-          prepend-inner-icon="mdi-pin"
-          variant="outlined"></v-text-field>
+      <v-text-field
+        density="compact"
+        v-model="location"
+        placeholder="Location"
+        prepend-inner-icon="mdi-pin"
+        variant="outlined"></v-text-field>
 
 
       <v-text-field
@@ -49,7 +49,7 @@
         variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
-      
+
       <v-text-field
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
@@ -82,73 +82,74 @@
           Have account Log in
           <v-icon icon="mdi-chevron-right"></v-icon>
         </RouterLink>
-        </v-card-text>
-      </v-card>
-    </div>
-  </template>
-  <script  lang="ts">
-  import{ push,ref } from "firebase/database"
-  import {fireDb} from "@/utils/constants"
-  import { defineComponent } from 'vue';
+      </v-card-text>
+    </v-card>
+  </div>
+</template>
+<script lang="ts">
+import {push, ref} from "firebase/database"
+import {fireDb} from "@/utils/constants"
+import {defineComponent} from 'vue';
 
 
-   export default defineComponent( {
-      data () {
-        return {
-          message:"",
-        visible: false,
-        fullname: "",
-        age:"",
-        email: "",
-        password:"",
-        confirm_password:"",
-        location:"",
-        
-      }},
-      methods:{
-        login(){
-          if(this.fullname ==""){
-            this.message="fullname cannot be blank"
-            return
-          }
-          if(this.age==""){
-            this.message="age cannot be blank"
-            return
-          }
-          if(this.location==""){
-            this.message="location cannot be blank"
-            return
-          }
-          if(this.email == ""){
-            this.message="email cannot be blank"
-            return
-          }
-          if(this.password ==""){
-            this.message="password cannot be blank"
-            return
-          }
-          if(this.confirm_password ==""){
-            this.message="password cannot be blank "
-            return
-          }
-          if(this.password !=this.confirm_password){
-            this.message="password does not match"
-            return
-          }
-           
-          //user object
-          let user={
-            fullname:this.fullname,
-            email:this.email,
-            password:this.password,
-            age:this.age,
-            location:this.location
-          }
-          //inserting user to firebase db
-          push(ref(fireDb,"users/"),user)
-          this.$router.push('/login');
+export default defineComponent({
+  data() {
+    return {
+      message: "",
+      visible: false,
+      fullname: "",
+      age: "",
+      email: "",
+      password: "",
+      confirm_password: "",
+      location: "",
 
-        }
-      },
-    })
-  </script>
+    }
+  },
+  methods: {
+    login() {
+      if (this.fullname == "") {
+        this.message = "fullname cannot be blank"
+        return
+      }
+      if (this.age == "") {
+        this.message = "age cannot be blank"
+        return
+      }
+      if (this.location == "") {
+        this.message = "location cannot be blank"
+        return
+      }
+      if (this.email == "") {
+        this.message = "email cannot be blank"
+        return
+      }
+      if (this.password == "") {
+        this.message = "password cannot be blank"
+        return
+      }
+      if (this.confirm_password == "") {
+        this.message = "password cannot be blank "
+        return
+      }
+      if (this.password != this.confirm_password) {
+        this.message = "password does not match"
+        return
+      }
+
+      //user object
+      let user = {
+        fullname: this.fullname,
+        email: this.email,
+        password: this.password,
+        age: this.age,
+        location: this.location
+      }
+      //inserting user to firebase db
+      push(ref(fireDb, "users/"), user)
+      this.$router.push('/login');
+
+    }
+  },
+})
+</script>
