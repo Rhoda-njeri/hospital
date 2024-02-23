@@ -108,7 +108,7 @@ import { RouterLink } from 'vue-router';
 
                 this.message="take user to dashboard all is ok"
 
-                this.$router.push({ name: 'dashboard'})
+                this.$router.push( '/dashboard')
 
 
               }else{
