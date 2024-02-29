@@ -60,7 +60,6 @@
         class="mb-8"
         color="blue"
         size="large"
-        @click="login"
         variant="tonal"
       >
         Log In
@@ -92,29 +91,8 @@ export default defineComponent({
     }
   },
   methods: {
-    login() {
-      if (this.fullname == "") {
-        this.message = "fullname cannot be blank"
-        return
-      }
-      if (this.email == "") {
-        this.message = "email cannot be blank"
-        return
-      }
-      if (this.password == "") {
-        this.message = "password cannot be blank"
-        return
-      }
-      if (this.confirm_password == "") {
-        this.message = "password cannot be blank "
-        return
-      }
-      if (this.password != this.confirm_password) {
-        this.message = "password does not match"
-        return
-      }
-      this.$router.push('/login');
-    }
+ 
+   
   },
 })
 </script>

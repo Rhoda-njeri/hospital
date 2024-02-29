@@ -87,7 +87,7 @@
   </div>
 </template>
 <script lang="ts">
-import {push, ref} from "firebase/database"
+import {push, ref, onValue} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 import {defineComponent} from 'vue';
 
@@ -116,6 +116,14 @@ export default defineComponent({
         this.message = "age cannot be blank"
         return
       }
+      if (parseInt(this.age) < 18) {
+        this.message = "under 18 are not welcomed"
+        return
+      }    
+      if (parseInt(this.age) > 50) {
+        this.message = "over 50 are not welcomed"
+        return
+      }
       if (this.location == "") {
         this.message = "location cannot be blank"
         return
@@ -131,10 +139,8 @@ export default defineComponent({
       if (this.confirm_password == "") {
         this.message = "password cannot be blank "
         return
-      }
-      if (this.password != this.confirm_password) {
-        this.message = "password does not match"
-        return
+    
+      
       }
 
       //user object
@@ -145,9 +151,33 @@ export default defineComponent({
         age: this.age,
         location: this.location
       }
-      //inserting user to firebase db
-      push(ref(fireDb, "users/"), user)
-      this.$router.push('/login');
+
+
+      // check if email exist
+      let userInfo:any = undefined
+      
+      onValue(ref(fireDb, '/users'), (snapshot) => {
+              snapshot.forEach((user) => {
+                if(user.val().email==this.email){
+                  userInfo=user.val()
+
+                }
+              })
+              if(userInfo != undefined){
+                this.message ="Email already taken"
+                return;
+              }else{
+                //inserting user to firebase db
+                push(ref(fireDb, "users/"), user)
+                this.$router.push('/login');
+
+              }
+
+
+          }, {
+            onlyOnce: true
+          });
+
 
     }
   },

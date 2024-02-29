@@ -105,12 +105,7 @@ import { RouterLink } from 'vue-router';
                 return;
               }
               if(userInfo.email ==this.email && userInfo.password==this.password){
-
-                this.message="take user to dashboard all is ok"
-
-                this.$router.push( '/dashboard')
-
-
+                this.$router.push('/dashboard')
               }else{
                 this.message="invalid password"
               }
