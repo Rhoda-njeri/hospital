@@ -29,6 +29,8 @@
             <v-list-item prepend-icon="mdi-account" title="All Doctors" to="/all-doctors" value="/all-doctors"></v-list-item>
             <v-list-item prepend-icon="mdi-account-group-outline" title="Users" to="/users" value="/users"></v-list-item>
             <v-list-item prepend-icon="mdi-account-group-outline" title="Profile" to="/profile" value="/users"></v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="add patients" to="/add patients" value="/users"></v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="all patients" to="/profile" value="/all patients"></v-list-item>
           </v-list>
         </v-navigation-drawer>
         <v-main style="height: 250px"></v-main>

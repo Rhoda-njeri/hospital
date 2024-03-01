@@ -53,7 +53,7 @@
         <v-btn
           block
           class="mb-8"
-          color="blue"
+          color="green"
           size="large"
           @click="login"
           variant="tonal">
@@ -143,7 +143,7 @@ export default defineComponent({
               }else{
                 //inserting user to firebase db
                 push(ref(fireDb, "doctors/"), doctor)
-                this.$router.push('/dashboard');
+                this.$router.push('/all-doctors');
 
               }
 

@@ -45,7 +45,7 @@
         <v-btn
           block
           class="mb-8"
-          color="blue"
+          color="purple"
           size="large"
           @click="login"
           variant="tonal"
@@ -66,8 +66,8 @@
   </template>
   <script  lang="ts">
   import { fireDb } from '@/utils/constants';
-import { getMaxListeners } from 'events';
 import { getDatabase, ref, onValue } from "firebase/database";
+import { getMaxListeners } from 'events';
 import { defineComponent } from 'vue';
 import { RouterLink } from 'vue-router';
   
