@@ -22,7 +22,7 @@
         <v-text-field
           density="compact"
           v-model="location"
-          placeholder="Experience"
+          placeholder="location"
           variant="outlined"></v-text-field>
   
         <v-text-field

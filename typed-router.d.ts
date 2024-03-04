@@ -42,6 +42,7 @@ declare module 'vue-router/auto/routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/add-doctors': RouteRecordInfo<'/add-doctors', '/add-doctors', Record<never, never>, Record<never, never>>,
     '/add-nurses': RouteRecordInfo<'/add-nurses', '/add-nurses', Record<never, never>, Record<never, never>>,
+    '/add-patient-popup': RouteRecordInfo<'/add-patient-popup', '/add-patient-popup', Record<never, never>, Record<never, never>>,
     '/add-patients': RouteRecordInfo<'/add-patients', '/add-patients', Record<never, never>, Record<never, never>>,
     '/all-doctors': RouteRecordInfo<'/all-doctors', '/all-doctors', Record<never, never>, Record<never, never>>,
     '/all-patients': RouteRecordInfo<'/all-patients', '/all-patients', Record<never, never>, Record<never, never>>,
