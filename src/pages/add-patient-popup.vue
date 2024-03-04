@@ -2,8 +2,7 @@
   <div class="pa-4 text-center">
     <v-dialog
       v-model="dialog"
-      max-width="600"
-    >
+      max-width="600">
       <template v-slot:activator="{ props: activatorProps }">
         <v-btn
           class="text-none font-weight-regular"
@@ -16,15 +15,13 @@
 
       <v-card
         prepend-icon="mdi-account"
-        title="User Profile"
-      >
+        title="User Profile">
         <v-card-text>
           <v-row dense>
             <v-col
               cols="12"
               md="4"
-              sm="6"
-            >
+              sm="6">
               <v-text-field
                 label="First name*"
                 required
@@ -83,20 +80,16 @@
               md="4"
               sm="6"
             >
-             
-            >
+
               <v-select
                 :items="['0-17', '18-29', '30-54', '54+']"
                 label="Age*"
                 required
               ></v-select>
-              </v-col> 
-              v-col
-                 cols="12"
-                sm="6"
-> 
+            </v-col>
 
-          <small class="text-caption text-medium-emphasis">*indicates required field</small>
+
+            <small class="text-caption text-medium-emphasis">*indicates required field</small>
           </v-row>
         </v-card-text>
 
@@ -124,9 +117,9 @@
 </template>
 
 <script lang="ts">
-  export default {
-    data: () => ({
-      dialog: false,
-    }),
-  }
+export default {
+  data: () => ({
+    dialog: false,
+  }),
+}
 </script>
