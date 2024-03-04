@@ -7,7 +7,7 @@
         <v-btn
           class="text-none font-weight-regular"
           prepend-icon="mdi-account"
-          text="Edit Profile"
+          text="Add-Patients"
           variant="tonal"
           v-bind="activatorProps"
         ></v-btn>
