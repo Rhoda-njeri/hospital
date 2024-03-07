@@ -13,12 +13,21 @@
           <v-card-text>Nurses</v-card-text>
         </v-card>
       </v-col>
+
+      <v-col cols="12" md="3">
+       <v-card prepend-icon="mdi-medical-bag">
+          <template v-slot:title>0</template>
+          <v-card-text>Medicine</v-card-text>
+        </v-card>
+      </v-col>
+
       <v-col cols="12" md="3">
         <v-card prepend-icon="mdi-account">
           <template v-slot:title>0</template>
           <v-card-text>Patients</v-card-text>
         </v-card>
       </v-col>
+
       <v-col cols="12" md="3">
         <v-card prepend-icon="mdi-account">
           <template v-slot:title>0</template>
