@@ -16,8 +16,7 @@
           density="compact"
           v-model="qualification"
           placeholder="Qualifications"
-          
-          variant="outlined"></v-text-field>
+           variant="outlined"></v-text-field>
   
         <v-text-field
           density="compact"
@@ -74,15 +73,13 @@ export default defineComponent({
   data() {
     return {
       message: "",
-      visible: false,
       name: "",
       qualification: "",
       idNumber: "",
       experience: "",
       salaryamount: "",
       employmentdate: "",
-      
-
+    
     }
   },
   methods: {

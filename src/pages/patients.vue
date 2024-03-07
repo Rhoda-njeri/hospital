@@ -1,5 +1,10 @@
 <template>
-  <div class="pa-4 text-center">
+    <v-data-table-virtual
+      :headers="headers"
+      :items="patients"
+      height="400"
+      item-value="name"
+    ></v-data-table-virtual>
     <v-dialog
       v-model="dialog"
       max-width="600">
@@ -25,6 +30,7 @@
               <v-text-field
                 label="First name*"
                 required
+                variant="outlined"
               ></v-text-field>
             </v-col>
 
@@ -34,8 +40,8 @@
               sm="6"
             >
               <v-text-field
-                hint="example of helper text only on focus"
                 label="Middle name"
+                variant="outlined"
               ></v-text-field>
             </v-col>
 
@@ -45,9 +51,8 @@
               sm="6"
             >
               <v-text-field
-                hint="example of persistent helper text"
                 label="Last name*"
-                persistent-hint
+                variant="outlined"
                 required
               ></v-text-field>
             </v-col>
@@ -59,6 +64,7 @@
             >
               <v-text-field
                 label="Contact*"
+                variant="outlined"
                 required
               ></v-text-field>
             </v-col>
@@ -71,6 +77,7 @@
               <v-text-field
                 label="Location*"
                 type="location"
+                variant="outlined"
                 required
               ></v-text-field>
             </v-col>
@@ -78,18 +85,18 @@
             <v-col
               cols="12"
               md="4"
-              sm="6"
-            >
+              sm="6">
 
               <v-select
                 :items="['0-17', '18-29', '30-54', '54+']"
                 label="Age*"
+                variant="outlined"
                 required
               ></v-select>
             </v-col>
 
 
-            <small class="text-caption text-medium-emphasis">*indicates required field</small>
+            <small class="text-caption text-decoration-none text-red">{{message}}</small>
           </v-row>
         </v-card-text>
 
@@ -113,13 +120,44 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
-</template>
-
-<script lang="ts">
-export default {
-  data: () => ({
-    dialog: false,
-  }),
-}
-</script>
+  </template>
+  
+  <script lang="ts">
+  import {fireDb} from '@/utils/constants';
+  import {ref, onValue} from "firebase/database";
+  
+  export default {
+    data: () => ({
+      dialog: false,
+      headers: [
+        {title: 'Names', align: 'start', key: 'name'},
+        {title: 'Age', align: 'end', key: 'age'},
+        {title: 'Location', align: 'end', key: 'location'},
+        {title: 'Contact', align: 'end', key: 'contact'},
+        
+      ],
+      patients: [] as any,
+    }),
+  
+    mounted() {
+  
+      this.fetchPatients();
+    }
+    , methods: {
+      fetchPatients() {
+        onValue(ref(fireDb, '/patients'), (snapshot) => {
+          snapshot.forEach((patient) => {
+            console.log(patient.val().contact)
+            this.patients.push({
+              name: patient.val().name,
+              age:patient.val().age,
+              location: patient.val().location,
+              contact: patient.val().contact,
+            } as any)
+          })
+        })
+      }
+    }
+  }
+  </script>
+  

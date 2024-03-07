@@ -25,15 +25,12 @@
   
           <v-list density="compact" nav>
             <v-list-item prepend-icon="mdi-home-city" title="Dashboard" to="/dashboard" value="/dashboard"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="Add Doctors" to="/add-doctors" value="/all-doctors"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="All Doctors" to="/all-doctors" value="/all-doctors"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-group-outline" title="Users" to="/users" value="/users"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-group-outline" title="Profile" to="/profile" value="/users"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="Add patients" to="/add-patients" value="/add-patients"></v-list-item>
-            <v-list-item prepend-icon="mdi-account" title="All patients" to="/all-patients" value="/all-patients"></v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="Doctors" to="/doctors" value="/doctors"></v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="Patients" to="/patients" value="/patients"></v-list-item>
+            <v-list-item prepend-icon="mdi-account" title="Nurses" to="/nurses" value="/nurses"></v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-main style="height: 250px">
+        <v-main style="height: 500px">
         
         </v-main>
       </v-layout>
@@ -44,7 +41,7 @@
       data () {
         return {
           drawer: true,
-          rail: true,
+          rail: false,
         }
       },
     }
