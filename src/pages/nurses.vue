@@ -160,7 +160,7 @@ export default {
     fetchNurses() {
       onValue(ref(fireDb, '/nurses'), (snapshot) => {
         snapshot.forEach((nurse) => {
-          console.log(doctor.val().idNumber)
+          console.log(nurse.val().idNumber)
           this.nurses.push({
             name: nurse.val().name,
             qualification:nurse.val().qualification,
