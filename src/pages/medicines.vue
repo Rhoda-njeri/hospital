@@ -1,7 +1,7 @@
 <template>
     <v-data-table-virtual
       :headers="headers"
-      :items="nurses"
+      :items="medicines"
       height="400"
       item-value="name"
     ></v-data-table-virtual>
@@ -12,7 +12,7 @@
           <v-btn
             class="text-none font-weight-regular"
             prepend-icon="mdi-account-plus"
-            text="Add nurse"
+            text="Add medicine"
             variant="tonal"
             v-bind="activatorProps"
           ></v-btn>
@@ -20,7 +20,7 @@
   
         <v-card
           prepend-icon="mdi-account-plus"
-          title="Nurse Details">
+          title="Medicine Details">
           <v-card-text>
             <v-row dense>
               <v-col
@@ -41,9 +41,9 @@
                 sm="6"
               >
                 <v-text-field
-                  label="Qualification"
+                  label="Expiry date"
                   required
-                  v-model="qualification"
+                  v-model="expiryDate"
                   variant="outlined"
                 ></v-text-field>
               </v-col>
@@ -54,9 +54,9 @@
                 sm="6"
               >
                 <v-text-field
-                  label="Experience"
+                  label="Disease"
                   variant="outlined"
-                  v-model="experience"
+                  v-model="disease"
                   required
                 ></v-text-field>
               </v-col>
@@ -67,38 +67,12 @@
                 sm="6"
               >
                 <v-text-field
-                  label="Salary Amount"
+                  label="Cost of Medicine"
                   required
-                  v-model="salaryAmount"
+                  v-model="cost"
                   variant="outlined"
                 ></v-text-field>
-              </v-col>
-  
-              <v-col
-                cols="12"
-                md="4"
-                sm="6"
-              >
-                <v-text-field
-                  label="Id Number*"
-                  required
-                  v-model="idNumber"
-                  variant="outlined"
-                ></v-text-field>
-              </v-col>
-  
-              <v-col
-                cols="12"
-                md="4"
-                sm="6">
-  
-                <v-text-field
-                  label="Employment Date*"
-                  required
-                  v-model="employmentDate"
-                  variant="outlined"
-                ></v-text-field>
-              </v-col>
+            </v-col>
   
               <small class="text-caption text-decoration-none text-red">{{message}}</small>
             </v-row>
@@ -117,10 +91,10 @@
   
             <v-btn
               color="primary"
-              text="Save Nurse"
+              text="Save Medicine"
               variant="tonal"
               :loading="loading"
-              @click="saveNurse"
+              @click="saveMedicine"
             ></v-btn>
           </v-card-actions>
         </v-card>
@@ -136,100 +110,82 @@
       dialog:false,
       loading:false,
       headers: [
-        {title: 'Names', align: 'start', key: 'name'},
-        {title: 'Qualifications', align: 'end', key: 'qualification'},
-        {title: 'Experience', align: 'end', key: 'experience'},
-        {title: 'Salary Amount', align: 'end', key: 'salaryAmount'},
-        {title: 'Id Number', align: 'end', key: 'idNumber'},
-        {title: 'Employment Date', align: 'end', key: 'employmentDate'},
+        {title: 'Names', align: 'start', key: 'names'},
+        {title: 'Expiry date', align: 'end', key: 'expiry date'},
+        {title: 'Disease', align: 'end', key: 'Disease'},
+        {title: 'Cost of medicine', align: 'end', key: 'cost of medicine'},
       ],
         message: "",
         name: "",
-        qualification: "",
-        idNumber: "",
-        experience: "",
-        salaryAmount: "",
-        employmentDate: "",
-        nurses: [] as any,
+        expiryDate: "",
+        disease: "",
+        cost: "",
+        medicines: [] as any,
     }),
   
     mounted() {
-      this.fetchNurses();
+      this.fetchMedicines();
     }
     , methods: {
-      fetchNurses() {
-        onValue(ref(fireDb, '/nurses'), (snapshot) => {
-          snapshot.forEach((nurse) => {
-            console.log(doctor.val().idNumber)
-            this.nurses.push({
-              name: nurse.val().name,
-              qualification:nurse.val().qualification,
-              experience: nurse.val().experience,
-              salaryAmount: nurse.val().salaryAmount,
-              idNumber: nurse.val().idNumber,
-              employmentDate: nurse.val().employmentDate,
+      fetchMedicines() {
+        onValue(ref(fireDb, '/medicines'), (snapshot) => {
+          snapshot.forEach((medicine) => {
+            console.log(medicine.val().idNumber)
+            this.medicine.push({
+              name: medicine.val().name,
+              expiryDate:medicine.val().expiryDate,
+              disease: medicine.val().disease,
+              costofMedicine: medicine.val().costofMedicine,
             } as any)
           })
         })
       },
-      saveNurse() {
+      saveMedicine() {
         if (this.name == "") {
           this.message = "name cannot be blank"
           return
         }
-        if (this.qualification == "") {
-          this.message = "qualification cannot be blank"
+        if (this.expiryDate == "") {
+          this.message = "expiry date cannot be blank"
           return
         }
-        if (this.experience == "") {
-          this.message = "experience cannot be blank"
-          return
-        }
-        if (this.salaryAmount == "") {
-          this.message = "salary amount cannot be blank"
+        if (this.disease== "") {
+          this.message = "disease cannot be blank"
           return
        }
   
-       if (this.employmentDate == "") {
-          this.message = "employmentdate cannot be blank"
-          return
-       }
-        
-  
-       if (this.idNumber == "") {
-          this.message = "Id number cannot be blank"
+       if (this.cost== "") {
+          this.message = "cost of medicine cannot be blank"
           return
        }
         
        this.loading=true
       
         //user object
-        let nurse = {
+        let medicine = {
           name: this.name,
-          qualification: this.qualification,
-          experience: this.experience,
-          employmentDate: this.employmentDate,
-          idNumber: this.idNumber,
-          salaryAmount: this.salaryAmount
+          expiryDate: this.expiryDate,
+          disease: this.disease,
+          cost: this.cost,
         }
   
   
-        // check if NURSE ID exist
-        let nurseInfo:any = undefined
+        // check if MEDICINEID exist
+        let medicineInfo:any = undefined
         
-        onValue(ref(fireDb, '/nurses'), (snapshot) => {
+        onValue(ref(fireDb, '/medicines'), (snapshot) => {
                 snapshot.forEach((user) => {
                   if(user.val().name==this.name){
-                    nurseInfo=user.val()
+                    medicineInfo=user.val()
   
                   }
                 })
-                if(nurseInfo != undefined){
-                  this.message ="Nurse already registered"
+                if(medicineInfo != undefined){
+                  this.message ="Medicine already registered"
                   return;
                 }else{
                   //inserting user to firebase db
-                  push(ref(fireDb, "nurses/"), nurse)
+                  push(ref(fireDb, "medicines/"), medicine)
                   this.loading=false
                   this.dialog=false
   
@@ -242,7 +198,7 @@
   
   
       }
-    }
+    },
   }
   </script>
   
