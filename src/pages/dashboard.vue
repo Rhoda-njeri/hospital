@@ -2,13 +2,13 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="3">
-        <v-card prepend-icon="mdi-account">
+        <v-card prepend-icon="mdi-doctor">
           <template v-slot:title>{{ doctors }}</template>
           <v-card-text>Doctors</v-card-text>
         </v-card>
       </v-col>
       <v-col cols="12" md="3">
-        <v-card prepend-icon="mdi-account">
+        <v-card prepend-icon="mdi-mother-nurse">
           <template v-slot:title>{{ nurses }}</template>
           <v-card-text>Nurses</v-card-text>
         </v-card>
@@ -16,22 +16,15 @@
 
       <v-col cols="12" md="3">
         <v-card prepend-icon="mdi-medical-bag">
-          <template v-slot:title>0</template>
+          <template v-slot:title>{{ medicine }}</template>
           <v-card-text>Medicine</v-card-text>
         </v-card>
       </v-col>
 
       <v-col cols="12" md="3">
-        <v-card prepend-icon="mdi-account">
-          <template v-slot:title>0</template>
+        <v-card prepend-icon="mdi-wheelchair">
+          <template v-slot:title>{{ patients }}</template>
           <v-card-text>Patients</v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="3">
-        <v-card prepend-icon="mdi-account">
-          <template v-slot:title>0</template>
-          <v-card-text>All Users</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -46,6 +39,9 @@ export default {
   data: () => ({
       doctors: 0,
       nurses: 0,
+      medicine: 0,
+      patients: 0,
+    
     }
   ), mounted() {
     this.fetchData();
@@ -55,6 +51,8 @@ export default {
       onValue(ref(fireDb, '/'), (snapshot) => {
         this.doctors = snapshot.child('doctors').size
         this.nurses = snapshot.child('nurses').size
+        this.medicine = snapshot.child('medicines').size
+        this.patients = snapshot.child('patients').size
       })
     }
   }

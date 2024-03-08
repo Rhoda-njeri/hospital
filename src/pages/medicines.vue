@@ -11,7 +11,7 @@
         <template v-slot:activator="{ props: activatorProps }">
           <v-btn
             class="text-none font-weight-regular"
-            prepend-icon="mdi-account-plus"
+            prepend-icon="mdi-medical-bag"
             text="Add medicine"
             variant="tonal"
             v-bind="activatorProps"
@@ -19,7 +19,7 @@
         </template>
   
         <v-card
-          prepend-icon="mdi-account-plus"
+          prepend-icon="mdi-medical-bag"
           title="Medicine Details">
           <v-card-text>
             <v-row dense>
