@@ -50,6 +50,7 @@ const rail = ref(false);
 const theme = useTheme()
 const router = useRouter();
 const name = 'John Doe';
+const role = 'Admin';
 const logoutLoad = ref(false);
 
 function toggleDrawer() {
