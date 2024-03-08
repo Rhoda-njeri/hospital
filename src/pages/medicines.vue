@@ -43,7 +43,7 @@
                 <v-text-field
                   label="Expiry date"
                   required
-                  v-model="expiryDate"
+                  v-model="expiry"
                   variant="outlined"
                 ></v-text-field>
               </v-col>
@@ -67,7 +67,7 @@
                 sm="6"
               >
                 <v-text-field
-                  label="Cost of Medicine"
+                  label="Medicine cost"
                   required
                   v-model="cost"
                   variant="outlined"
@@ -110,14 +110,14 @@
       dialog:false,
       loading:false,
       headers: [
-        {title: 'Names', align: 'start', key: 'names'},
-        {title: 'Expiry date', align: 'end', key: 'expiry date'},
-        {title: 'Disease', align: 'end', key: 'Disease'},
-        {title: 'Cost of medicine', align: 'end', key: 'cost of medicine'},
+        {title: 'Names', align: 'start', key: 'name'},
+        {title: 'Expiry date', align: 'end', key: 'expiry'},
+        {title: 'Disease', align: 'end', key: 'disease'},
+        {title: 'Medicine cost', align: 'end', key: 'cost'},
       ],
         message: "",
         name: "",
-        expiryDate: "",
+        expiry: "",
         disease: "",
         cost: "",
         medicines: [] as any,
@@ -130,23 +130,22 @@
       fetchMedicines() {
         onValue(ref(fireDb, '/medicines'), (snapshot) => {
           snapshot.forEach((medicine) => {
-            console.log(medicine.val().idNumber)
-            this.medicine.push({
+            this.medicines.push({
               name: medicine.val().name,
-              expiryDate:medicine.val().expiryDate,
+              expiry:medicine.val().expiry,
               disease: medicine.val().disease,
-              costofMedicine: medicine.val().costofMedicine,
+              cost: medicine.val().cost,
             } as any)
           })
         })
       },
       saveMedicine() {
         if (this.name == "") {
-          this.message = "name cannot be blank"
+          this.message = "Name cannot be blank"
           return
         }
-        if (this.expiryDate == "") {
-          this.message = "expiry date cannot be blank"
+        if (this.expiry == "") {
+          this.message = "Expiry date cannot be blank"
           return
         }
         if (this.disease== "") {
@@ -155,7 +154,7 @@
        }
   
        if (this.cost== "") {
-          this.message = "cost of medicine cannot be blank"
+          this.message = "medicine cost cannot be blank"
           return
        }
         
@@ -164,7 +163,7 @@
         //user object
         let medicine = {
           name: this.name,
-          expiryDate: this.expiryDate,
+          expiry: this.expiry,
           disease: this.disease,
           cost: this.cost,
         }
@@ -174,9 +173,9 @@
         let medicineInfo:any = undefined
         
         onValue(ref(fireDb, '/medicines'), (snapshot) => {
-                snapshot.forEach((user) => {
-                  if(user.val().name==this.name){
-                    medicineInfo=user.val()
+                snapshot.forEach((medicine) => {
+                  if(medicine.val().name==this.name){
+                    medicineInfo=medicine.val()
   
                   }
                 })
