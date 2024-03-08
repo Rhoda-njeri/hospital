@@ -169,7 +169,7 @@
         }
   
   
-        // check if MEDICINEID exist
+        // check if MEDICINE exist
         let medicineInfo:any = undefined
         
         onValue(ref(fireDb, '/medicines'), (snapshot) => {
