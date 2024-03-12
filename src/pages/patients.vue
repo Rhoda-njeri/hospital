@@ -95,7 +95,6 @@
               ></v-select>
             </v-col>
 
-
             <small class="text-caption text-decoration-none text-red">{{message}}</small>
           </v-row>
         </v-card-text>
@@ -124,19 +123,32 @@
   
   <script lang="ts">
   import {fireDb} from '@/utils/constants';
-  import {ref, onValue} from "firebase/database";
+  import {push, ref, onValue} from "firebase/database"
   
   export default {
     data: () => ({
       dialog: false,
+    loading:false,
       headers: [
-        {title: 'Names', align: 'start', key: 'name'},
+        {title: 'First Name', align: 'start', key: 'first_name'},
+        {title: 'Middle Name', align: 'start', key: 'middle_name'},
+        {title: 'Last Name', align: 'start', key: 'last_name'},
         {title: 'Age', align: 'end', key: 'age'},
         {title: 'Location', align: 'end', key: 'location'},
         {title: 'Contact', align: 'end', key: 'contact'},
-        
-      ],
+        {title: 'Action', align: 'end', key: 'action'},
+         ],
+      message: "",
+      first_name: "",
+      middle_name: "",
+      last_name: "",
+      age: "",
+      location: "",
+      contact: "",
+      action: "",
       patients: [] as any,
+      
+      
     }),
   
     mounted() {
@@ -149,14 +161,90 @@
           snapshot.forEach((patient) => {
             console.log(patient.val().contact)
             this.patients.push({
-              name: patient.val().name,
+              first_name: patient.val().first_name,
+              middle_name: patient.val().middle_name,
+              last_name:patient.val().last_name,
               age:patient.val().age,
-              location: patient.val().location,
-              contact: patient.val().contact,
+              location:patient.val().location,
+              contact:patient.val().contact,
             } as any)
           })
         })
+      },
+      savePatient() {
+      if (this.first_name == "") {
+        this.message = "First Name cannot be blank"
+        return
       }
+      if (this.middle_name == "") {
+        this.message = "Middle Name cannot be blank"
+        return
+      }
+      if (this.last_name == "") {
+        this.message = "Last Name cannot be blank"
+        return
+      }
+      if (this.age == "") {
+        this.message = "Age cannot be blank"
+        return
+     }
+
+     if (this.location == "") {
+        this.message = "Location cannot be blank"
+        return
+     }
+      
+
+     if (this.contact == "") {
+        this.message = "Contact cannot be blank"
+        return
+     }
+        if (this.action == "") {
+        this.message = "Action cannot be blank"
+        return
+     }
+      
+     this.loading=true
+    
+      //user object
+
+      let patient = {
+        first_name: this.first_name,
+        middle_name: this.middle_name,
+        last_name: this.last_name,
+        age: this.age,
+        locationr: this.location,
+        contact: this.contact,
+        action: this.action,
+      }
+
+
+      // check if PATIENTS ID exist
+      let patientInfo:any = undefined
+      
+      onValue(ref(fireDb, '/patients'), (snapshot) => {
+              snapshot.forEach((user) => {
+                if(user.val().name==this.first_name){
+                  patientInfo=user.val()
+
+                }
+              })
+              if(patientInfo != undefined){
+                this.message ="Patient already registered"
+                return;
+              }else{
+                //inserting user to firebase db
+                push(ref(fireDb, "patients/"), patient)
+                this.loading=false
+                this.dialog=false
+
+              }
+
+
+          }, {
+            onlyOnce: true
+          });
+    }
     }
   }
   </script>
