@@ -1,177 +1,177 @@
 <template>
-    <v-data-table-virtual
-      :headers="headers"
-      :items="patients"
-      height="400"
-      item-value="name"
-    ></v-data-table-virtual>
-    <v-dialog
-      v-model="dialog"
-      max-width="600">
-      <template v-slot:activator="{ props: activatorProps }">
-        <v-btn
-          class="text-none font-weight-regular"
-          prepend-icon="mdi-wheelchair"
-          text="Add-Patients"
-          variant="tonal"
-          v-bind="activatorProps"
-        ></v-btn>
-      </template>
-
-      <v-card
+  <v-data-table-virtual
+    :headers="headers"
+    :items="patients"
+    height="400"
+    item-value="name"
+  ></v-data-table-virtual>
+  <v-dialog
+    v-model="dialog"
+    max-width="600">
+    <template v-slot:activator="{ props: activatorProps }">
+      <v-btn
+        class="text-none font-weight-regular"
         prepend-icon="mdi-wheelchair"
-        title="Patient Details">
-        <v-card-text>
-          <v-row dense>
-            <v-col
-              cols="12"
-              md="4"
-              sm="6">
-              <v-text-field
-                label="First name*"
-                required
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+        text="Add-Patients"
+        variant="tonal"
+        v-bind="activatorProps"
+      ></v-btn>
+    </template>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Middle name"
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+    <v-card
+      prepend-icon="mdi-wheelchair"
+      title="Patient Details">
+      <v-card-text>
+        <v-row dense>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6">
+            <v-text-field
+              label="First name*"
+              required
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Last name*"
-                variant="outlined"
-                required
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Middle name"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Contact*"
-                variant="outlined"
-                required
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Last name*"
+              variant="outlined"
+              required
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Location*"
-                type="location"
-                variant="outlined"
-                required
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Contact*"
+              variant="outlined"
+              required
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6">
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Location*"
+              type="location"
+              variant="outlined"
+              required
+            ></v-text-field>
+          </v-col>
 
-              <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
-                label="Age*"
-                variant="outlined"
-                required
-              ></v-select>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6">
 
-            <small class="text-caption text-decoration-none text-red">{{message}}</small>
-          </v-row>
-        </v-card-text>
+            <v-select
+              :items="['0-17', '18-29', '30-54', '54+']"
+              label="Age*"
+              variant="outlined"
+              required
+            ></v-select>
+          </v-col>
 
-        <v-divider></v-divider>
+          <small class="text-caption text-decoration-none text-red">{{ message }}</small>
+        </v-row>
+      </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+      <v-divider></v-divider>
 
-          <v-btn
-            text="Close"
-            variant="plain"
-            @click="dialog = false"
-          ></v-btn>
+      <v-card-actions>
+        <v-spacer></v-spacer>
 
-          <v-btn
-            color="primary"
-            text="Save"
-            variant="tonal"
-            @click="dialog = false"
-          ></v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </template>
-  
-  <script lang="ts">
-  import {fireDb} from '@/utils/constants';
-  import {push, ref, onValue} from "firebase/database"
-  
-  export default {
-    data: () => ({
-      dialog: false,
-    loading:false,
-      headers: [
-        {title: 'First Name', align: 'start', key: 'first_name'},
-        {title: 'Middle Name', align: 'start', key: 'middle_name'},
-        {title: 'Last Name', align: 'start', key: 'last_name'},
-        {title: 'Age', align: 'end', key: 'age'},
-        {title: 'Location', align: 'end', key: 'location'},
-        {title: 'Contact', align: 'end', key: 'contact'},
-        {title: 'Action', align: 'end', key: 'action'},
-         ],
-      message: "",
-      first_name: "",
-      middle_name: "",
-      last_name: "",
-      age: "",
-      location: "",
-      contact: "",
-      action: "",
-      patients: [] as any,
-      
-      
-    }),
-  
-    mounted() {
-  
-      this.fetchPatients();
-    }
-    , methods: {
-      fetchPatients() {
-        onValue(ref(fireDb, '/patients'), (snapshot) => {
-          snapshot.forEach((patient) => {
-            console.log(patient.val().contact)
-            this.patients.push({
-              first_name: patient.val().first_name,
-              middle_name: patient.val().middle_name,
-              last_name:patient.val().last_name,
-              age:patient.val().age,
-              location:patient.val().location,
-              contact:patient.val().contact,
-            } as any)
-          })
+        <v-btn
+          text="Close"
+          variant="plain"
+          @click="dialog = false"
+        ></v-btn>
+
+        <v-btn
+          color="primary"
+          text="Save"
+          variant="tonal"
+          @click="savePatient"
+        ></v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script lang="ts">
+import {fireDb} from '@/utils/constants';
+import {push, ref, onValue} from "firebase/database"
+
+export default {
+  data: () => ({
+    dialog: false,
+    loading: false,
+    headers: [
+      {title: 'First Name', align: 'start', key: 'first_name'},
+      {title: 'Middle Name', align: 'start', key: 'middle_name'},
+      {title: 'Last Name', align: 'start', key: 'last_name'},
+      {title: 'Age', align: 'end', key: 'age'},
+      {title: 'Location', align: 'end', key: 'location'},
+      {title: 'Contact', align: 'end', key: 'contact'},
+      {title: 'Action', align: 'end', key: 'action'},
+    ],
+    message: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    age: "",
+    location: "",
+    contact: "",
+    action: "",
+    patients: [] as any,
+
+
+  }),
+
+  mounted() {
+
+    this.fetchPatients();
+  }
+  , methods: {
+    fetchPatients() {
+      onValue(ref(fireDb, '/patients'), (snapshot) => {
+        snapshot.forEach((patient) => {
+          console.log(patient.val().contact)
+          this.patients.push({
+            first_name: patient.val().first_name,
+            middle_name: patient.val().middle_name,
+            last_name: patient.val().last_name,
+            age: patient.val().age,
+            location: patient.val().location,
+            contact: patient.val().contact,
+          } as any)
         })
-      },
-      savePatient() {
+      })
+    },
+    savePatient() {
       if (this.first_name == "") {
         this.message = "First Name cannot be blank"
         return
@@ -187,25 +187,25 @@
       if (this.age == "") {
         this.message = "Age cannot be blank"
         return
-     }
+      }
 
-     if (this.location == "") {
+      if (this.location == "") {
         this.message = "Location cannot be blank"
         return
-     }
-      
+      }
 
-     if (this.contact == "") {
+
+      if (this.contact == "") {
         this.message = "Contact cannot be blank"
         return
-     }
-        if (this.action == "") {
+      }
+      if (this.action == "") {
         this.message = "Action cannot be blank"
         return
-     }
-      
-     this.loading=true
-    
+      }
+
+      this.loading = true
+
       //user object
 
       let patient = {
@@ -220,32 +220,31 @@
 
 
       // check if PATIENTS ID exist
-      let patientInfo:any = undefined
-      
+      let patientInfo: any = undefined
+
       onValue(ref(fireDb, '/patients'), (snapshot) => {
-              snapshot.forEach((user) => {
-                if(user.val().name==this.first_name){
-                  patientInfo=user.val()
+        snapshot.forEach((user) => {
+          if (user.val().name == this.first_name) {
+            patientInfo = user.val()
 
-                }
-              })
-              if(patientInfo != undefined){
-                this.message ="Patient already registered"
-                return;
-              }else{
-                //inserting user to firebase db
-                push(ref(fireDb, "patients/"), patient)
-                this.loading=false
-                this.dialog=false
+          }
+        })
+        if (patientInfo != undefined) {
+          this.message = "Patient already registered"
+          return;
+        } else {
+          //inserting user to firebase db
+          push(ref(fireDb, "patients/"), patient)
+          this.loading = false
+          this.dialog = false
 
-              }
+        }
 
 
-          }, {
-            onlyOnce: true
-          });
-    }
+      }, {
+        onlyOnce: true
+      });
     }
   }
-  </script>
-  
+}
+</script>
