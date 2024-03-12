@@ -4,7 +4,12 @@
     :items="patients"
     height="400"
     item-value="name"
-  ></v-data-table-virtual>
+  >
+    <template v-slot:item.action="{ item }">
+
+      <v-icon size="small" @click="deletePatient(item.raw)">mdi-delete</v-icon>
+    </template>
+  </v-data-table-virtual>
   <v-dialog
     v-model="dialog"
     max-width="600">
@@ -204,7 +209,7 @@ export default {
         this.message = "Contact cannot be blank"
         return
       }
-    
+
 
       this.loading = true
 
@@ -246,6 +251,9 @@ export default {
       }, {
         onlyOnce: true
       });
+    },
+    deletePatient(data: object) {
+      console.log(data)
     }
   }
 }
