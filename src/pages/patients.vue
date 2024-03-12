@@ -7,7 +7,9 @@
   >
     <template v-slot:item.action="{ item }">
 
+      <v-icon size="small" @click="editPatient(item.raw)">mdi-pencil</v-icon>
       <v-icon size="small" @click="deletePatient(item.raw)">mdi-delete</v-icon>
+      <v-icon size="small" @click="showPatient(item.raw)">mdi-eye</v-icon>
     </template>
   </v-data-table-virtual>
   <v-dialog
@@ -252,9 +254,14 @@ export default {
         onlyOnce: true
       });
     },
-    deletePatient(data: object) {
+    editPatient(data: object) {
       console.log(data)
+    },
+      deleteDoctor(data: object) {
+      console.log(data)
+
+  }
     }
   }
-}
+
 </script>

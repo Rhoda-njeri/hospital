@@ -4,7 +4,14 @@
       :items="medicines"
       height="400"
       item-value="name"
-    ></v-data-table-virtual>
+    > <template v-slot:item.action="{ item }">
+
+<v-icon size="small" @click="editMedicine(item.raw)">mdi-pencil</v-icon>
+<v-icon size="small" @click="deleteMedicine(item.raw)">mdi-delete</v-icon>
+<v-icon size="small" @click="showMedicine(item.raw)">mdi-eye</v-icon>
+</template>
+</v-data-table-virtual>
+<v-dialog
     <v-dialog
         v-model="dialog"
         max-width="600">
@@ -114,6 +121,7 @@
         {title: 'Expiry date', align: 'end', key: 'expiry'},
         {title: 'Disease', align: 'end', key: 'disease'},
         {title: 'Medicine cost', align: 'end', key: 'cost'},
+        {title: 'Action', align: 'end', key: 'action'},
       ],
         message: "",
         name: "",
@@ -194,7 +202,12 @@
             }, {
               onlyOnce: true
             });
-  
+          },
+          editMedicine(data: object) {
+      console.log(data)
+    },
+    deleteMedicine(data: object) {
+      console.log(data)
   
       }
     },

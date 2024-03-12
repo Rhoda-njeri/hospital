@@ -3,9 +3,16 @@
     :headers="headers"
     :items="nurses"
     height="400"
-    item-value="name"
-  ></v-data-table-virtual>
-  <v-dialog
+    item-value="name">
+    <template v-slot:item.action="{ item }">
+
+<v-icon size="small" @click="editNurse(item.raw)">mdi-pencil</v-icon>
+<v-icon size="small" @click="deleteNurse(item.raw)">mdi-delete</v-icon>
+<v-icon size="small" @click="showNurse(item.raw)">mdi-eye</v-icon>
+</template>
+</v-data-table-virtual>
+<v-dialog
+<
       v-model="dialog"
       max-width="600">
       <template v-slot:activator="{ props: activatorProps }">
@@ -142,6 +149,7 @@ export default {
       {title: 'Salary Amount', align: 'end', key: 'salaryAmount'},
       {title: 'Id Number', align: 'end', key: 'idNumber'},
       {title: 'Employment Date', align: 'end', key: 'employmentDate'},
+      {title: 'Action', align: 'end', key: 'action'},
     ],
       message: "",
       name: "",
@@ -241,7 +249,14 @@ export default {
           });
 
 
-    }
+    },
+    editNurse(data: object){
+      console.log(data)
+
+    },
+    deleteDoctor(data: object) {
+      console.log(data)
   }
+}
 }
 </script>
