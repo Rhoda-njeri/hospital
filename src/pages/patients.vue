@@ -28,8 +28,9 @@
             md="4"
             sm="6">
             <v-text-field
-              label="First name*"
+              label="First name"
               required
+              v-model="first_name"
               variant="outlined"
             ></v-text-field>
           </v-col>
@@ -42,6 +43,7 @@
             <v-text-field
               label="Middle name"
               variant="outlined"
+              v-model="middle_name"
             ></v-text-field>
           </v-col>
 
@@ -54,6 +56,7 @@
               label="Last name*"
               variant="outlined"
               required
+              v-model="last_name"
             ></v-text-field>
           </v-col>
 
@@ -66,6 +69,7 @@
               label="Contact*"
               variant="outlined"
               required
+              v-model="contact"
             ></v-text-field>
           </v-col>
 
@@ -76,9 +80,9 @@
           >
             <v-text-field
               label="Location*"
-              type="location"
               variant="outlined"
               required
+              v-model="location"
             ></v-text-field>
           </v-col>
 
@@ -89,9 +93,10 @@
 
             <v-select
               :items="['0-17', '18-29', '30-54', '54+']"
-              label="Age*"
+              label="Age"
               variant="outlined"
               required
+              v-model="age"
             ></v-select>
           </v-col>
 
@@ -199,10 +204,7 @@ export default {
         this.message = "Contact cannot be blank"
         return
       }
-      if (this.action == "") {
-        this.message = "Action cannot be blank"
-        return
-      }
+    
 
       this.loading = true
 
@@ -213,7 +215,7 @@ export default {
         middle_name: this.middle_name,
         last_name: this.last_name,
         age: this.age,
-        locationr: this.location,
+        location: this.location,
         contact: this.contact,
         action: this.action,
       }
