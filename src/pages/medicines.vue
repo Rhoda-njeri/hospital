@@ -208,9 +208,13 @@
     },
     deleteMedicine(data: object) {
       console.log(data)
-  
+    },
+      showMedicine(data: object) {
+      console.log(data)
+
       }
     },
   }
+
   </script>
   

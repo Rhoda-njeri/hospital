@@ -254,9 +254,15 @@ export default {
       console.log(data)
 
     },
-    deleteDoctor(data: object) {
+    deleteNurse(data: object) {
       console.log(data)
-  }
+  },
+    showNurse(data: object) {
+      console.log(data)
 }
+
+},
+
+      
 }
 </script>

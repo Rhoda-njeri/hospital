@@ -257,11 +257,16 @@ export default {
     editPatient(data: object) {
       console.log(data)
     },
-      deleteDoctor(data: object) {
+      deletePatient(data: object) {
       console.log(data)
 
-  }
+  },
+      showPatient(data: object) {
+      console.log(data)
+
+      }
+},
     }
-  }
+  
 
 </script>

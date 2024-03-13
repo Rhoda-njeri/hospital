@@ -252,8 +252,14 @@ export default {
     },
     deleteDoctor(data: object) {
       console.log(data)
+    },
+    showDoctor(data: object) {
+      console.log(data)
+
+</script>
     }
 
-    }
-  }
+  },
+}
+  
 </script>
