@@ -1,16 +1,15 @@
 <template>
-  <v-data-table-virtual
+  <v-data-table
     :headers="headers"
     :items="medicines"
     height="400"
     item-value="name">
-    <template v-slot:item.action="{ item }">
-
-      <v-icon size="small" @click="editMedicine(item.raw)">mdi-pencil</v-icon>
-      <v-icon size="small" @click="deleteMedicine(item.raw)">mdi-delete</v-icon>
-      <v-icon size="small" @click="showMedicine(item.raw)">mdi-eye</v-icon>
+    <template v-slot:[`item.action`]="{ item }">
+      <v-icon size="small" @click="editMedicine(item)">mdi-pencil</v-icon>
+      <v-icon size="small" @click="deleteMedicine(item.id)">mdi-delete</v-icon>
+      <v-icon size="small" @click="showMedicine(item.id)">mdi-eye</v-icon>
     </template>
-  </v-data-table-virtual>
+  </v-data-table>
   <v-dialog
     v-model="dialog"
     max-width="600">
@@ -138,6 +137,7 @@ export default {
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
         snapshot.forEach((medicine) => {
           this.medicines.push({
+            id: medicine.key,
             name: medicine.val().name,
             expiry: medicine.val().expiry,
             disease: medicine.val().disease,
@@ -205,10 +205,10 @@ export default {
     editMedicine(data: object) {
       console.log(data)
     },
-    deleteMedicine(data: object) {
+    deleteMedicine(data: string) {
       console.log(data)
     },
-    showMedicine(data: object) {
+    showMedicine(data: string) {
       console.log(data)
 
     }

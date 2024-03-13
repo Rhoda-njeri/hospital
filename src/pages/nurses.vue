@@ -1,16 +1,15 @@
 <template>
-  <v-data-table-virtual
+  <v-data-table
     :headers="headers"
     :items="nurses"
     height="400"
     item-value="name">
-    <template v-slot:item.action="{ item }">
-
-      <v-icon size="small" @click="editNurse(item.raw)">mdi-pencil</v-icon>
-      <v-icon size="small" @click="deleteNurse(item.raw)">mdi-delete</v-icon>
-      <v-icon size="small" @click="showNurse(item.raw)">mdi-eye</v-icon>
+    <template v-slot:[`item.action`]="{ item }">
+      <v-icon size="small" @click="editNurse(item)">mdi-pencil</v-icon>
+      <v-icon size="small" @click="deleteNurse(item.id)">mdi-delete</v-icon>
+      <v-icon size="small" @click="showNurse(item.id)">mdi-eye</v-icon>
     </template>
-  </v-data-table-virtual>
+  </v-data-table>
   <v-dialog
     v-model="dialog"
     max-width="600">
@@ -247,16 +246,15 @@ export default {
         onlyOnce: true
       });
 
-
     },
     editNurse(data: object) {
       console.log(data)
 
     },
-    deleteNurse(data: object) {
+    deleteNurse(data: string) {
       console.log(data)
     },
-    showNurse(data: object) {
+    showNurse(data: string) {
       console.log(data)
     }
 
