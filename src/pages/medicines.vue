@@ -11,7 +11,6 @@
 <v-icon size="small" @click="showMedicine(item.raw)">mdi-eye</v-icon>
 </template>
 </v-data-table-virtual>
-<v-dialog
     <v-dialog
         v-model="dialog"
         max-width="600">
