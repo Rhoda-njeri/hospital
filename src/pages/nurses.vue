@@ -37,7 +37,7 @@
               <v-text-field
                 label="Name"
                 v-model="name"
-                required        
+                required
                 variant="outlined"
               ></v-text-field>
             </v-col>
@@ -202,15 +202,15 @@ export default {
         this.message = "employmentdate cannot be blank"
         return
      }
-      
+
 
      if (this.idNumber == "") {
         this.message = "Id number cannot be blank"
         return
      }
-      
+
      this.loading=true
-    
+
       //user object
       let nurse = {
         name: this.name,
@@ -224,7 +224,7 @@ export default {
 
       // check if NURSE ID exist
       let nurseInfo:any = undefined
-      
+
       onValue(ref(fireDb, '/nurses'), (snapshot) => {
               snapshot.forEach((user) => {
                 if(user.val().name==this.name){
@@ -263,6 +263,6 @@ export default {
 
 },
 
-      
+
 }
 </script>
