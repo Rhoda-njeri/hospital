@@ -28,6 +28,11 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+ <v-col>
+  <v-img src="https://images.rawpixel.com/image_350/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3JtMjA4YmF0Y2gxMi10ZWNoaS0wMS1hLmpwZw.jpg"></v-img>
+ </v-col>
+      </v-row>
   </v-container>
 </template>
 <script lang="ts">
