@@ -67,7 +67,7 @@ interface NavLink {
 
 let links: NavLink[] = []
 
-links.push({title: 'Dashboard', icon: 'mdi  mdi-home', value: '/dashboard'})
+links.push({title: 'Dashboard', icon: 'mdi  mdi-home', value: '/'})
 links.push({title: 'Doctors', icon: 'mdi mdi-doctor ', value: '/doctors'})
 links.push({title: 'Nurses', icon: 'mdi mdi-mother-nurse ', value: '/nurses'})
 links.push({title: 'Medicines', icon: 'mdi mdi-medical-bag ', value: '/medicines'})
@@ -75,7 +75,7 @@ links.push({title: 'Patients', icon: 'mdi mdi-wheelchair', value: '/patients'})
 
 function logout() {
   logoutLoad.value = true
-  signOut();
+  // signOut();
   router.push('/login');
 }
 

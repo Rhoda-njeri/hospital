@@ -139,8 +139,6 @@ export default defineComponent({
       if (this.confirm_password == "") {
         this.message = "password cannot be blank "
         return
-
-
       }
 
       //user object
