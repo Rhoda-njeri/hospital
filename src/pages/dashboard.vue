@@ -41,7 +41,7 @@ export default {
       nurses: 0,
       medicine: 0,
       patients: 0,
-    
+
     }
   ), mounted() {
     this.fetchData();

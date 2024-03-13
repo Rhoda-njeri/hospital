@@ -53,8 +53,6 @@
         href="#"
         rel="noopener noreferrer"
         target="_blank">{{ message }}</a>
-
-
       <v-btn
         block
         class="mb-8"
@@ -69,7 +67,8 @@
         <RouterLink
           class="text-blue text-decoration-none"
           to="/signup">
-          Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
+          Sign up now
+          <v-icon icon="mdi-chevron-right"></v-icon>
         </RouterLink>
       </v-card-text>
     </v-card>
@@ -90,10 +89,7 @@ export default defineComponent({
       confirm_password: ""
     }
   },
-  methods: {
- 
-   
-  },
+  methods: {},
 })
 </script>
 

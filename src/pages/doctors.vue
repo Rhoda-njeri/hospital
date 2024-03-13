@@ -7,130 +7,130 @@
     <template v-slot:item.action="{ item }">
 
       <v-icon size="small" @click="editDoctor(item.raw)">mdi-pencil</v-icon>
-<v-icon size="small" @click="deleteDoctor(item.raw)">mdi-delete</v-icon>
-<v-icon size="small" @click="showDoctor(item.raw)">mdi-eye</v-icon>
-</template>
-</v-data-table-virtual>
+      <v-icon size="small" @click="deleteDoctor(item.raw)">mdi-delete</v-icon>
+      <v-icon size="small" @click="showDoctor(item.raw)">mdi-eye</v-icon>
+    </template>
+  </v-data-table-virtual>
   <v-dialog
-      v-model="dialog"
-      max-width="600">
-      <template v-slot:activator="{ props: activatorProps }">
-        <v-btn
-          class="text-none font-weight-regular"
-          prepend-icon="mdi-doctor"
-          text="Add doctor"
-          variant="tonal"
-          v-bind="activatorProps"
-        ></v-btn>
-      </template>
-
-      <v-card
+    v-model="dialog"
+    max-width="600">
+    <template v-slot:activator="{ props: activatorProps }">
+      <v-btn
+        class="text-none font-weight-regular"
         prepend-icon="mdi-doctor"
-        title="Doctor Details">
-        <v-card-text>
-          <v-row dense>
-            <v-col
-              cols="12"
-              md="4"
-              sm="6">
-              <v-text-field
-                label="Name"
-                v-model="name"
-                required        
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+        text="Add doctor"
+        variant="tonal"
+        v-bind="activatorProps"
+      ></v-btn>
+    </template>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Qualification"
-                required
-                v-model="qualification"
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+    <v-card
+      prepend-icon="mdi-doctor"
+      title="Doctor Details">
+      <v-card-text>
+        <v-row dense>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6">
+            <v-text-field
+              label="Name"
+              v-model="name"
+              required
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Experience"
-                variant="outlined"
-                v-model="experience"
-                required
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Qualification"
+              required
+              v-model="qualification"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Salary Amount"
-                required
-                v-model="salaryAmount"
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Experience"
+              variant="outlined"
+              v-model="experience"
+              required
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6"
-            >
-              <v-text-field
-                label="Id Number*"
-                required
-                v-model="idNumber"
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Salary Amount"
+              required
+              v-model="salaryAmount"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-            <v-col
-              cols="12"
-              md="4"
-              sm="6">
+          <v-col
+            cols="12"
+            md="4"
+            sm="6"
+          >
+            <v-text-field
+              label="Id Number*"
+              required
+              v-model="idNumber"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-              <v-text-field
-                label="Employment Date*"
-                required
-                v-model="employmentDate"
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
+          <v-col
+            cols="12"
+            md="4"
+            sm="6">
 
-            <small class="text-caption text-decoration-none text-red">{{message}}</small>
-          </v-row>
-        </v-card-text>
+            <v-text-field
+              label="Employment Date*"
+              required
+              v-model="employmentDate"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
 
-        <v-divider></v-divider>
+          <small class="text-caption text-decoration-none text-red">{{ message }}</small>
+        </v-row>
+      </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+      <v-divider></v-divider>
 
-          <v-btn
-            text="Close"
-            variant="plain"
-            @click="dialog = false"
-          ></v-btn>
+      <v-card-actions>
+        <v-spacer></v-spacer>
 
-          <v-btn
-            color="primary"
-            text="Save Doctor"
-            variant="tonal"
-            :loading="loading"
-            @click="saveDoctor"
-          ></v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+        <v-btn
+          text="Close"
+          variant="plain"
+          @click="dialog = false"
+        ></v-btn>
+
+        <v-btn
+          color="primary"
+          text="Save Doctor"
+          variant="tonal"
+          :loading="loading"
+          @click="saveDoctor"
+        ></v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -139,8 +139,8 @@ import {fireDb} from "@/utils/constants"
 
 export default {
   data: () => ({
-    dialog:false,
-    loading:false,
+    dialog: false,
+    loading: false,
     headers: [
       {title: 'Names', align: 'start', key: 'name'},
       {title: 'Qualifications', align: 'end', key: 'qualification'},
@@ -150,14 +150,14 @@ export default {
       {title: 'Employment Date', align: 'end', key: 'employmentDate'},
       {title: 'Action', align: 'end', key: 'action'},
     ],
-      message: "",
-      name: "",
-      qualification: "",
-      idNumber: "",
-      experience: "",
-      salaryAmount: "",
-      employmentDate: "",
-      doctors: [] as any,
+    message: "",
+    name: "",
+    qualification: "",
+    idNumber: "",
+    experience: "",
+    salaryAmount: "",
+    employmentDate: "",
+    doctors: [] as any,
   }),
 
   mounted() {
@@ -170,7 +170,7 @@ export default {
           console.log(doctor.val().idNumber)
           this.doctors.push({
             name: doctor.val().name,
-            qualification:doctor.val().qualification,
+            qualification: doctor.val().qualification,
             experience: doctor.val().experience,
             salaryAmount: doctor.val().salaryAmount,
             idNumber: doctor.val().idNumber,
@@ -195,21 +195,21 @@ export default {
       if (this.salaryAmount == "") {
         this.message = "salary amount cannot be blank"
         return
-     }
+      }
 
-     if (this.employmentDate == "") {
+      if (this.employmentDate == "") {
         this.message = "employmentdate cannot be blank"
         return
-     }
-      
+      }
 
-     if (this.idNumber == "") {
+
+      if (this.idNumber == "") {
         this.message = "Id number cannot be blank"
         return
-     }
-      
-     this.loading=true
-    
+      }
+
+      this.loading = true
+
       //user object
       let doctor = {
         name: this.name,
@@ -222,31 +222,31 @@ export default {
 
 
       // check if DOCTOR ID exist
-      let doctorInfo:any = undefined
-      
+      let doctorInfo: any = undefined
+
       onValue(ref(fireDb, '/doctors'), (snapshot) => {
-              snapshot.forEach((user) => {
-                if(user.val().name==this.name){
-                  doctorInfo=user.val()
+        snapshot.forEach((user) => {
+          if (user.val().name == this.name) {
+            doctorInfo = user.val()
 
-                }
-              })
-              if(doctorInfo != undefined){
-                this.message ="Doctor already registered"
-                return;
-              }else{
-                //inserting user to firebase db
-                push(ref(fireDb, "doctors/"), doctor)
-                this.loading=false
-                this.dialog=false
+          }
+        })
+        if (doctorInfo != undefined) {
+          this.message = "Doctor already registered"
+          return;
+        } else {
+          //inserting user to firebase db
+          push(ref(fireDb, "doctors/"), doctor)
+          this.loading = false
+          this.dialog = false
 
-              }
+        }
 
 
-          }, {
-            onlyOnce: true
-          });
-        },
+      }, {
+        onlyOnce: true
+      });
+    },
     editDoctor(data: object) {
       console.log(data)
     },
@@ -257,9 +257,9 @@ export default {
       console.log(data)
 
 </script>
-    }
-
-  },
 }
-  
+
+},
+}
+
 </script>
