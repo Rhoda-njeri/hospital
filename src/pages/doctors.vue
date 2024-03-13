@@ -255,11 +255,12 @@ export default {
     },
     showDoctor(data: object) {
       console.log(data)
-
+      
 </script>
-}
+     }
 
-},
+  },
+
 }
 
 </script>
