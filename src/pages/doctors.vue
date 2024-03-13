@@ -245,18 +245,9 @@ export default {
     },
     showDoctor(data: string) {
       console.log(data)
-<<<<<<< HEAD
-      
-</script>
-     }
-
-  },
-
-=======
     }
 
   },
->>>>>>> 53fc8db4826b2dae48e4f5eb69f6e8c81f175e22
 }
 
 </script>
