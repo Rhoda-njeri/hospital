@@ -158,7 +158,7 @@ export default {
         snapshot.forEach((doctor) => {
           console.log(doctor.val().idNumber)
           this.doctors.push({
-            id:doctor.key,
+            id: doctor.key,
             name: doctor.val().name,
             qualification: doctor.val().qualification,
             experience: doctor.val().experience,
@@ -231,7 +231,6 @@ export default {
           this.dialog = false
 
         }
-
 
       }, {
         onlyOnce: true
