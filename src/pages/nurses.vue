@@ -6,10 +6,10 @@
     item-value="name">
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editNurse(item)">mdi-pencil</v-icon>
-      <v-icon size="small" @click="deleteNurse(item.id)">mdi-delete</v-icon>
+      <v-icon size="small" @click="deleteNurse(item)">mdi-delete</v-icon>
       <v-icon size="small" @click="showNurse(item.id)">mdi-eye</v-icon>
     </template>
-  </v-data-table>
+  </v-data-table>t
   <v-dialog
     v-model="dialog"
     max-width="600">
@@ -123,7 +123,7 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue,update} from "firebase/database"
+import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
@@ -212,7 +212,7 @@ export default {
         salaryAmount: this.salaryAmount
       }
 
-      if(this.editNurse){
+      if(this.actionEdit){
         update(ref(fireDb, '/nurses/'+this.editId),nurse)
         this.closeDialog()
         return
@@ -266,10 +266,11 @@ export default {
     this.employmentDate=''
     
     },
-    deleteNurse(data: string) {
-      ref(fireDb, '/nurses/'+data.id).remove()
+    deleteNurse(data: any) {
+      remove(ref(fireDb, '/nurses/' + data.id))
       console.log(data)
     },
+
     showNurse(data: string) {
       console.log(data)
     }

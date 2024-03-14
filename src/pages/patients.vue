@@ -6,8 +6,8 @@
     item-value="name">
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editPatient(item)">mdi-pencil</v-icon>
-    <v-icon size="small" @click="deletePatient(item.id)">mdi-delete</v-icon>
-    <v-icon size="small" @click="showPatient(item.id)">mdi-eye</v-icon>
+    <v-icon size="small" @click="deletePatient(item)">mdi-delete</v-icon>
+    <v-icon size="small" @click="showPatient(item)">mdi-eye</v-icon>
   </template>
   </v-data-table>
   <v-dialog
@@ -121,7 +121,7 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue,update} from "firebase/database"
+import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
@@ -156,7 +156,7 @@ export default {
   , methods: {
     fetchPatients() {
       onValue(ref(fireDb, '/patients'), (snapshot) => {
-        
+
         this.patients=[]
         snapshot.forEach((patient) => {
           this.patients.push({
@@ -269,7 +269,7 @@ export default {
     
     },
     deletePatient(data: string) {
-      ref(fireDb, '/patients/'+data.id).remove()
+      remove(ref(fireDb, '/patients/' + data.id))
       console.log(data)
     },
     showPatient(data: string) {

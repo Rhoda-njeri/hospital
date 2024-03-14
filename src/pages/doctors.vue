@@ -6,7 +6,7 @@
     item-value="name">
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editDoctor(item)">mdi-pencil</v-icon>
-      <v-icon size="small" @click="deleteDoctor(item.id)">mdi-delete</v-icon>
+      <v-icon size="small" @click="deleteDoctor(item)">mdi-delete</v-icon>
       <v-icon size="small" @click="showDoctor(item.id)">mdi-eye</v-icon>
     </template>
   </v-data-table>
@@ -123,7 +123,7 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue,update} from "firebase/database"
+import {push, ref, onValue, update, remove } from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
@@ -266,9 +266,10 @@ export default {
     this.employmentDate=''
     
     },
-    deleteDoctor(data: string) {
-      ref(fireDb, '/doctors/'+data.id).remove()
+    deleteDoctor(data: any) {
+      remove(ref(fireDb, '/doctors/' + data.id))
       console.log(data)
+
     },
     showDoctor(data: string) {
       console.log(data)

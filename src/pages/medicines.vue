@@ -227,6 +227,7 @@ export default {
       remove(ref(fireDb, '/medicines/' + data.id))
       console.log(data)
     },
+    
     showMedicine(data: string) {
       console.log(data)
     }
