@@ -22,7 +22,6 @@
         v-bind="activatorProps"
       ></v-btn>
     </template>
-
     <v-card
       prepend-icon="mdi-mother-nurse"
       title="Nurse Details">
@@ -43,8 +42,7 @@
           <v-col
             cols="12"
             md="4"
-            sm="6"
-          >
+            sm="6">
             <v-text-field
               label="Qualification"
               required
@@ -53,24 +51,18 @@
             ></v-text-field>
           </v-col>
 
-          <v-col
-            cols="12"
-            md="4"
-            sm="6"
-          >
+          <v-col cols="12" md="4" sm="6">
             <v-text-field
               label="Experience"
               variant="outlined"
               v-model="experience"
-              required
-            ></v-text-field>
+              required></v-text-field>
           </v-col>
 
           <v-col
             cols="12"
             md="4"
-            sm="6"
-          >
+            sm="6">
             <v-text-field
               label="Salary Amount"
               required
@@ -78,12 +70,10 @@
               variant="outlined"
             ></v-text-field>
           </v-col>
-
           <v-col
             cols="12"
             md="4"
-            sm="6"
-          >
+            sm="6">
             <v-text-field
               label="Id Number*"
               required
@@ -117,12 +107,12 @@
         <v-btn
           text="Close"
           variant="plain"
-          @click="dialog = false"
+          @click="closeDialog"
         ></v-btn>
 
         <v-btn
           color="primary"
-          text="Save Nurse"
+          :text="actionEdit?'Update Doctor':'Save Nurse'"
           variant="tonal"
           :loading="loading"
           @click="saveNurse"
@@ -133,13 +123,14 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue} from "firebase/database"
+import {push, ref, onValue,update} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
   data: () => ({
     dialog: false,
     loading: false,
+    actionEdit:false,
     headers: [
       {title: 'Names', align: 'start', key: 'name'},
       {title: 'Qualifications', align: 'end', key: 'qualification'},
@@ -151,6 +142,7 @@ export default {
     ],
     message: "",
     name: "",
+    editId:"",
     qualification: "",
     idNumber: "",
     experience: "",
@@ -165,9 +157,10 @@ export default {
   , methods: {
     fetchNurses() {
       onValue(ref(fireDb, '/nurses'), (snapshot) => {
+        this.nurses=[]
         snapshot.forEach((nurse) => {
-          console.log(nurse.val().idNumber)
           this.nurses.push({
+            id: nurse.key,
             name: nurse.val().name,
             qualification: nurse.val().qualification,
             experience: nurse.val().experience,
@@ -219,8 +212,12 @@ export default {
         salaryAmount: this.salaryAmount
       }
 
-
-      // check if NURSE ID exist
+      if(this.editNurse){
+        update(ref(fireDb, '/nurses/'+this.editId),nurse)
+        this.closeDialog()
+        return
+      }
+      // check if Nurse ID exist
       let nurseInfo: any = undefined
 
       onValue(ref(fireDb, '/nurses'), (snapshot) => {
@@ -241,17 +238,36 @@ export default {
 
         }
 
-
       }, {
         onlyOnce: true
       });
-
     },
-    editNurse(data: object) {
-      console.log(data)
-
+    editNurse(data: any) {
+      this.actionEdit=true
+      this.dialog=true
+      this.name=data.name
+      this.qualification=data.qualification
+      this.experience=data.experience
+      this.salaryAmount=data.salaryAmount
+      this.idNumber=data.idNumber
+      this.employmentDate=data.employmentDate
+      this.editId=data.id
+    },
+    closeDialog(){
+      this.dialog = false
+      this.actionEdit=false
+      this.loading=false
+      
+    this.name=''
+    this.qualification=''
+    this.idNumber=''
+    this.experience=''
+    this.salaryAmount=''
+    this.employmentDate=''
+    
     },
     deleteNurse(data: string) {
+      ref(fireDb, '/nurses/'+data.id).remove()
       console.log(data)
     },
     showNurse(data: string) {
@@ -259,7 +275,6 @@ export default {
     }
 
   },
-
-
 }
+
 </script>

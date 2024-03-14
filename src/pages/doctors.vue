@@ -212,7 +212,7 @@ export default {
         salaryAmount: this.salaryAmount
       }
 
-      if(this.editDoctor){
+      if(this.actionEdit){
         update(ref(fireDb, '/doctors/'+this.editId),doctor)
         this.closeDialog()
         return

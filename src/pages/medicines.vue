@@ -22,7 +22,6 @@
         v-bind="activatorProps"
       ></v-btn>
     </template>
-
     <v-card
       prepend-icon="mdi-medical-bag"
       title="Medicine Details">
@@ -43,8 +42,7 @@
           <v-col
             cols="12"
             md="4"
-            sm="6"
-          >
+            sm="6">
             <v-text-field
               label="Expiry date"
               required
@@ -53,24 +51,18 @@
             ></v-text-field>
           </v-col>
 
-          <v-col
-            cols="12"
-            md="4"
-            sm="6"
-          >
+          <v-col cols="12" md="4" sm="6">
             <v-text-field
               label="Disease"
               variant="outlined"
               v-model="disease"
-              required
-            ></v-text-field>
+              required></v-text-field>
           </v-col>
 
           <v-col
             cols="12"
             md="4"
-            sm="6"
-          >
+            sm="6">
             <v-text-field
               label="Medicine cost"
               required
@@ -78,6 +70,8 @@
               variant="outlined"
             ></v-text-field>
           </v-col>
+          
+          
 
           <small class="text-caption text-decoration-none text-red">{{ message }}</small>
         </v-row>
@@ -91,12 +85,12 @@
         <v-btn
           text="Close"
           variant="plain"
-          @click="dialog = false"
+          @click="closeDialog"
         ></v-btn>
 
         <v-btn
           color="primary"
-          text="Save Medicine"
+          :text="actionEdit?'Update Medicine':'Save Medicine'"
           variant="tonal"
           :loading="loading"
           @click="saveMedicine"
@@ -107,24 +101,27 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue} from "firebase/database"
+import {push, ref, onValue,update} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
   data: () => ({
     dialog: false,
     loading: false,
+    actionEdit:false,
     headers: [
       {title: 'Names', align: 'start', key: 'name'},
       {title: 'Expiry date', align: 'end', key: 'expiry'},
       {title: 'Disease', align: 'end', key: 'disease'},
       {title: 'Medicine cost', align: 'end', key: 'cost'},
       {title: 'Action', align: 'end', key: 'action'},
+    
     ],
     message: "",
     name: "",
-    expiry: "",
-    disease: "",
+    editId:"",
+    expiry:"",
+    disease:"",
     cost: "",
     medicines: [] as any,
   }),
@@ -135,6 +132,7 @@ export default {
   , methods: {
     fetchMedicines() {
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
+        this.medicines=[]
         snapshot.forEach((medicine) => {
           this.medicines.push({
             id: medicine.key,
@@ -148,22 +146,22 @@ export default {
     },
     saveMedicine() {
       if (this.name == "") {
-        this.message = "Name cannot be blank"
+        this.message = "name cannot be blank"
         return
       }
       if (this.expiry == "") {
-        this.message = "Expiry date cannot be blank"
+        this.message = "Expiry Datecannot be blank"
         return
       }
-      if (this.disease == "") {
+      if (this.disease== "") {
         this.message = "disease cannot be blank"
         return
       }
-
       if (this.cost == "") {
-        this.message = "medicine cost cannot be blank"
+        this.message = "cost cannot be blank"
         return
       }
+
 
       this.loading = true
 
@@ -173,21 +171,26 @@ export default {
         expiry: this.expiry,
         disease: this.disease,
         cost: this.cost,
+      
       }
 
-
-      // check if MEDICINE exist
+      if(this.actionEdit){
+        update(ref(fireDb, '/medicines/'+this.editId),medicine)
+        this.closeDialog()
+        return
+      }
+      // check if Medicine ID exist
       let medicineInfo: any = undefined
 
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
-        snapshot.forEach((medicine) => {
-          if (medicine.val().name == this.name) {
-            medicineInfo = medicine.val()
+        snapshot.forEach((user) => {
+          if (user.val().name == this.name) {
+            medicineInfo = user.val()
 
           }
         })
         if (medicineInfo != undefined) {
-          this.message = "Medicine already registered"
+          this.message = "medicine already registered"
           return;
         } else {
           //inserting user to firebase db
@@ -197,21 +200,38 @@ export default {
 
         }
 
-
       }, {
         onlyOnce: true
       });
     },
-    editMedicine(data: object) {
-      console.log(data)
+    editMedicine(data: any) {
+      this.actionEdit=true
+      this.dialog=true
+      this.name=data.name
+      this.expiry=data.expiry
+      this.disease=data.disease
+      this.cost=data.cost
+      this.editId=data.id                                                                                        
+    },
+    closeDialog(){
+      this.dialog = false
+      this.actionEdit=false
+      this.loading=false
+      
+    this.name=''
+    this.expiry=''
+    this.disease=''
+    this.cost=''
+    
     },
     deleteMedicine(data: string) {
+      ref(fireDb, '/medicines/'+data.id).remove()
       console.log(data)
     },
     showMedicine(data: string) {
       console.log(data)
-
     }
+
   },
 }
 
