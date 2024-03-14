@@ -6,7 +6,7 @@
     item-value="name">
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editMedicine(item)">mdi-pencil</v-icon>
-      <v-icon size="small" @click="deleteMedicine(item.id)">mdi-delete</v-icon>
+      <v-icon size="small" @click="deleteMedicine(item)">mdi-delete</v-icon>
       <v-icon size="small" @click="showMedicine(item.id)">mdi-eye</v-icon>
     </template>
   </v-data-table>
@@ -70,8 +70,7 @@
               variant="outlined"
             ></v-text-field>
           </v-col>
-          
-          
+
 
           <small class="text-caption text-decoration-none text-red">{{ message }}</small>
         </v-row>
@@ -101,27 +100,27 @@
 </template>
 
 <script lang="ts">
-import {push, ref, onValue,update} from "firebase/database"
+import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
 
 export default {
   data: () => ({
     dialog: false,
     loading: false,
-    actionEdit:false,
+    actionEdit: false,
     headers: [
       {title: 'Names', align: 'start', key: 'name'},
       {title: 'Expiry date', align: 'end', key: 'expiry'},
       {title: 'Disease', align: 'end', key: 'disease'},
       {title: 'Medicine cost', align: 'end', key: 'cost'},
       {title: 'Action', align: 'end', key: 'action'},
-    
+
     ],
     message: "",
     name: "",
-    editId:"",
-    expiry:"",
-    disease:"",
+    editId: "",
+    expiry: "",
+    disease: "",
     cost: "",
     medicines: [] as any,
   }),
@@ -132,7 +131,7 @@ export default {
   , methods: {
     fetchMedicines() {
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
-        this.medicines=[]
+        this.medicines = []
         snapshot.forEach((medicine) => {
           this.medicines.push({
             id: medicine.key,
@@ -153,7 +152,7 @@ export default {
         this.message = "Expiry Datecannot be blank"
         return
       }
-      if (this.disease== "") {
+      if (this.disease == "") {
         this.message = "disease cannot be blank"
         return
       }
@@ -171,11 +170,11 @@ export default {
         expiry: this.expiry,
         disease: this.disease,
         cost: this.cost,
-      
+
       }
 
-      if(this.actionEdit){
-        update(ref(fireDb, '/medicines/'+this.editId),medicine)
+      if (this.actionEdit) {
+        update(ref(fireDb, '/medicines/' + this.editId), medicine)
         this.closeDialog()
         return
       }
@@ -205,27 +204,27 @@ export default {
       });
     },
     editMedicine(data: any) {
-      this.actionEdit=true
-      this.dialog=true
-      this.name=data.name
-      this.expiry=data.expiry
-      this.disease=data.disease
-      this.cost=data.cost
-      this.editId=data.id                                                                                        
+      this.actionEdit = true
+      this.dialog = true
+      this.name = data.name
+      this.expiry = data.expiry
+      this.disease = data.disease
+      this.cost = data.cost
+      this.editId = data.id
     },
-    closeDialog(){
+    closeDialog() {
       this.dialog = false
-      this.actionEdit=false
-      this.loading=false
-      
-    this.name=''
-    this.expiry=''
-    this.disease=''
-    this.cost=''
-    
+      this.actionEdit = false
+      this.loading = false
+
+      this.name = ''
+      this.expiry = ''
+      this.disease = ''
+      this.cost = ''
+
     },
-    deleteMedicine(data: string) {
-      ref(fireDb, '/medicines/'+data.id).remove()
+    deleteMedicine(data: any) {
+      remove(ref(fireDb, '/medicines/' + data.id))
       console.log(data)
     },
     showMedicine(data: string) {
