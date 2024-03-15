@@ -9,7 +9,7 @@
       <v-icon size="small" @click="deleteNurse(item)">mdi-delete</v-icon>
       <v-icon size="small" @click="showNurse(item.id)">mdi-eye</v-icon>
     </template>
-  </v-data-table>t
+  </v-data-table>
   <v-dialog
     v-model="dialog"
     max-width="600">
@@ -112,7 +112,7 @@
 
         <v-btn
           color="primary"
-          :text="actionEdit?'Update Doctor':'Save Nurse'"
+          :text="actionEdit?'Update Nurse':'Save Nurse'"
           variant="tonal"
           :loading="loading"
           @click="saveNurse"
@@ -120,7 +120,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-<v-dialog
+  <v-dialog
     v-model="dialog_confirm_delete"
     max-width="600">
     <v-card

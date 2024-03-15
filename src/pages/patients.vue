@@ -118,6 +118,40 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+
+
+<v-dialog
+    v-model="dialog_confirm_delete"
+    max-width="600">
+    <v-card
+      prepend-icon="mdi-whe"
+      title="Confirm">
+      <v-card-text>
+      Are you sure to delete {{nameToDelete}}
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          text="Cancel"
+          variant="plain"
+          @click="dialog_confirm_delete=false"
+        ></v-btn>
+
+        <v-btn
+        color="primary"
+          text="Delete"
+          variant="tonal"
+          :loading="loading"
+          @click="continueDeletePatient"
+          ></v-btn>
+        </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -127,8 +161,11 @@ import {fireDb} from "@/utils/constants"
 export default {
   data: () => ({
     dialog: false,
+    dialog_confirm_delete:false,
+    id_to_delete:"",
     loading: false,
     actionEdit:false,
+    nameToDelete:"",
     headers: [
       {title: 'First Name', align: 'start', key: 'first_name'},
       {title: 'Middle Name', align: 'end', key: 'middle_name'},
@@ -172,7 +209,7 @@ export default {
         })
       })
     },
-    saveMedicine() {
+    savePatient() {
       if (this.first_name == "") {
         this.message = "First Name cannot be blank"
         return
@@ -209,7 +246,7 @@ export default {
       age: this.age,
       location: this.location,
       contact: this.contact,
-      action: this.action,
+      action: this.actionEdit
       
       }
 
@@ -268,7 +305,14 @@ export default {
     
     
     },
-    deletePatient(data: string) {
+
+           deletePatient(data: any) {
+
+this.dialog_confirm_delete=true
+this.id_to_delete=data.id
+this.nameToDelete=data.name},
+
+    continueDeletePatient(data: string) {
       remove(ref(fireDb, '/patients/' + data.id))
       console.log(data)
     },

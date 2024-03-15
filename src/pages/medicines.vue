@@ -32,8 +32,8 @@
             md="4"
             sm="6">
             <v-text-field
-              label="Name"
-              v-model="name"
+              label="Medicine Name"
+              v-model="medicine_name"
               required
               variant="outlined"
             ></v-text-field>
@@ -64,7 +64,7 @@
             md="4"
             sm="6">
             <v-text-field
-              label="Medicine cost"
+              label="Cost"
               required
               v-model="cost"
               variant="outlined"
@@ -97,41 +97,38 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-</template>
-
-
 <v-dialog
-v-model="dialog_confirm_delete"
-max-width="600">
-<v-card
-  prepend-icon="mdi-medical-bag"
-  title="Confirm">
-  <v-card-text>
-  Are you sure to delete {{nameToDelete}}
-  </v-card-text>
+    v-model="dialog_confirm_delete"
+    max-width="600">
+    <v-card
+      prepend-icon="mdi-medical-bag"
+      title="Confirm">
+      <v-card-text>
+        Are you sure to delete {{nameToDelete}}
+      </v-card-text>
 
-  <v-divider></v-divider>
+      <v-divider></v-divider>
 
-  <v-card-actions>
-    <v-spacer></v-spacer>
+      <v-card-actions>
+        <v-spacer></v-spacer>
 
-    <v-btn
-      text="Cancel"
-      variant="plain"
-      @click="dialog_confirm_delete=false"
+        <v-btn
+          text="Cancel"
+          variant="plain"
+          @click="dialog_confirm_delete=false"
     ></v-btn>
-
+    
     <v-btn
-      color="primary"
-      text="Delete"
-      variant="tonal"
-      :loading="loading"
-      @click="continueDeleteMedicines"
-    ></v-btn>
-  </v-card-actions>
-</v-card>
-</v-dialog>
-</template>
+          color="primary"
+          text="Delete"
+          variant="tonal"
+          :loading="loading"
+          @click="continueDeleteNurse"
+        ></v-btn>
+    </v-card-actions>
+    </v-card>
+    </v-dialog>
+    </template>
 <script lang="ts">
 import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
@@ -139,6 +136,9 @@ import {fireDb} from "@/utils/constants"
 export default {
   data: () => ({
     dialog: false,
+    dialog_confirm_delete:false,
+    id_to_delete:"",
+    nameToDelete:"",
     loading: false,
     actionEdit: false,
     headers: [
@@ -150,7 +150,7 @@ export default {
 
     ],
     message: "",
-    name: "",
+    medicine_name: "",
     editId: "",
     expiry: "",
     disease: "",
@@ -168,7 +168,7 @@ export default {
         snapshot.forEach((medicine) => {
           this.medicines.push({
             id: medicine.key,
-            name: medicine.val().name,
+           medicine_name: medicine.val().medicine_name,
             expiry: medicine.val().expiry,
             disease: medicine.val().disease,
             cost: medicine.val().cost,
@@ -177,8 +177,8 @@ export default {
       })
     },
     saveMedicine() {
-      if (this.name == "") {
-        this.message = "name cannot be blank"
+      if (this.medicine_name == "") {
+        this.message = "medicine_name cannot be blank"
         return
       }
       if (this.expiry == "") {
@@ -199,7 +199,7 @@ export default {
 
       //user object
       let medicine = {
-        name: this.name,
+        medicine_name: this.medicine_name,
         expiry: this.expiry,
         disease: this.disease,
         cost: this.cost,
@@ -216,7 +216,7 @@ export default {
 
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
         snapshot.forEach((user) => {
-          if (user.val().name == this.name) {
+          if (user.val().medicine_name == this.medicine_name) {
             medicineInfo = user.val()
 
           }
@@ -239,7 +239,7 @@ export default {
     editMedicine(data: any) {
       this.actionEdit = true
       this.dialog = true
-      this.name = data.name
+      this.medicine_name = data.medicine_name
       this.expiry = data.expiry
       this.disease = data.disease
       this.cost = data.cost
@@ -250,21 +250,23 @@ export default {
       this.actionEdit = false
       this.loading = false
 
-      this.name = ''
+      this.medicine_name = ''
       this.expiry = ''
       this.disease = ''
       this.cost = ''
 
     },
-    deleteMedicine(data: any) {
 
-      this.dialog_confirm_delete=true
-      this.id_to_delete=data.id
-      this.nameToDelete=data.name 
+     deleteMedicine(data: any) {
+
+
+this.dialog_confirm_delete=true
+this.id_to_delete=data.id
+this.nameToDelete=data.name   
 },
-        continueDeleteMedicine(){
-        remove(ref(fireDb, '/medicines/' + this.id_to_delete))
-        this.dialog_confirm_delete=false
+continueDeleteNurse(){
+remove(ref(fireDb, '/medicines/' + this.id_to_delete))
+this.dialog_confirm_delete=false
 
     },
     
