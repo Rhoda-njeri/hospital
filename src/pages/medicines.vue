@@ -99,6 +99,39 @@
   </v-dialog>
 </template>
 
+
+<v-dialog
+v-model="dialog_confirm_delete"
+max-width="600">
+<v-card
+  prepend-icon="mdi-medical-bag"
+  title="Confirm">
+  <v-card-text>
+  Are you sure to delete {{nameToDelete}}
+  </v-card-text>
+
+  <v-divider></v-divider>
+
+  <v-card-actions>
+    <v-spacer></v-spacer>
+
+    <v-btn
+      text="Cancel"
+      variant="plain"
+      @click="dialog_confirm_delete=false"
+    ></v-btn>
+
+    <v-btn
+      color="primary"
+      text="Delete"
+      variant="tonal"
+      :loading="loading"
+      @click="continueDeleteMedicines"
+    ></v-btn>
+  </v-card-actions>
+</v-card>
+</v-dialog>
+</template>
 <script lang="ts">
 import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
@@ -224,15 +257,23 @@ export default {
 
     },
     deleteMedicine(data: any) {
-      remove(ref(fireDb, '/medicines/' + data.id))
-      console.log(data)
+
+      this.dialog_confirm_delete=true
+      this.id_to_delete=data.id
+      this.nameToDelete=data.name 
+},
+        continueDeleteMedicine(){
+        remove(ref(fireDb, '/medicines/' + this.id_to_delete))
+        this.dialog_confirm_delete=false
+
     },
     
     showMedicine(data: string) {
       console.log(data)
-    }
+    },
 
-  },
+  }
+
 }
 
 </script>
