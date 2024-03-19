@@ -127,7 +127,7 @@
       prepend-icon="mdi-mdi-mother-nurse"
       title="Confirm">
       <v-card-text>
-      Are you sure to delete {{nameToDelete}}
+      Are you sure to delete {{a}} with {{b}} earning {{c}}
       </v-card-text>
 
       <v-divider></v-divider>
@@ -156,17 +156,21 @@
 <script lang="ts">
 import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
+import { c } from "unplugin-vue-router/dist/options-8dbadba3.js";
 
 export default {
   data: () => ({
     dialog: false,
     dialog_confirm_delete:false,
     id_to_delete:"",
+    a:"",
+    b:"",
+    c:"",
     nameToDelete:"",
     loading: false,
     actionEdit:false,
     headers: [
-      {title: 'Names', align: 'start', key: 'name'},
+      {title: 'Name', align: 'start', key: 'name'},
       {title: 'Qualifications', align: 'end', key: 'qualification'},
       {title: 'Experience', align: 'end', key: 'experience'},
       {title: 'Salary Amount', align: 'end', key: 'salaryAmount'},
@@ -305,6 +309,9 @@ export default {
 
 this.dialog_confirm_delete=true
 this.id_to_delete=data.id
+this.a=data.name
+this.b=data.qualification
+this.c=data.salaryAmount
 this.nameToDelete=data.name
 
 },

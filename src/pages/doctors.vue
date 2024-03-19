@@ -128,7 +128,7 @@
       prepend-icon="mdi-doctor"
       title="Confirm">
       <v-card-text>
-      Are you sure to delete {{nameToDelete}}
+        Are you sure to delete {{a}} with {{b}} earning {{c}}
       </v-card-text>
 
       <v-divider></v-divider>
@@ -164,6 +164,9 @@ export default {
     dialog: false,
     dialog_confirm_delete:false,
     id_to_delete:"",
+    a:"",
+    b:"",
+    c:"",
     nameToDelete:"",
     loading: false,
     actionEdit:false,
@@ -306,6 +309,9 @@ export default {
 
       this.dialog_confirm_delete=true
       this.id_to_delete=data.id
+      this.a=data.name
+      this.b=data.qualification
+      this.c=data.salaryAmount
       this.nameToDelete=data.name
 
     },

@@ -125,11 +125,11 @@
     v-model="dialog_confirm_delete"
     max-width="600">
     <v-card
-      prepend-icon="mdi-whe"
+      prepend-icon="mdi-wheelchair"
       title="Confirm">
       <v-card-text>
-      Are you sure to delete {{nameToDelete}}
-      </v-card-text>
+        Are you sure to delete {{a}} aged {{b}} with contact {{c}}
+      </v-card-text>           
 
       <v-divider></v-divider>
 
@@ -163,6 +163,9 @@ export default {
     dialog: false,
     dialog_confirm_delete:false,
     id_to_delete:"",
+    a:"",
+    b:"",
+    c:"",
     loading: false,
     actionEdit:false,
     nameToDelete:"",
@@ -310,11 +313,15 @@ export default {
 
 this.dialog_confirm_delete=true
 this.id_to_delete=data.id
-this.nameToDelete=data.name},
+this.a=data.first_name
+this.b=data.age
+this.c=data.contact
+this.nameToDelete=data.first_name +" "+ data.middle_name +" "+data.last_name
+},
 
-    continueDeletePatient(data: string) {
-      remove(ref(fireDb, '/patients/' + data.id))
-      console.log(data)
+continueDeletePatient(){
+remove(ref(fireDb, '/patients/' + this.id_to_delete))
+this.dialog_confirm_delete=false
     },
     showPatient(data: string) {
       console.log(data)

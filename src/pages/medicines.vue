@@ -32,8 +32,8 @@
             md="4"
             sm="6">
             <v-text-field
-              label="Medicine Name"
-              v-model="medicine_name"
+              label="Name"
+              v-model="name"
               required
               variant="outlined"
             ></v-text-field>
@@ -104,7 +104,7 @@
       prepend-icon="mdi-medical-bag"
       title="Confirm">
       <v-card-text>
-        Are you sure to delete {{nameToDelete}}
+        Are you sure to delete {{a}} expiring  {{b }} curing {{c}}
       </v-card-text>
 
       <v-divider></v-divider>
@@ -138,19 +138,21 @@ export default {
     dialog: false,
     dialog_confirm_delete:false,
     id_to_delete:"",
-    nameToDelete:"",
+    a:"",
+    b:"",
+    c:"",
     loading: false,
     actionEdit: false,
     headers: [
-      {title: 'Names', align: 'start', key: 'name'},
+      {title: 'Name', align: 'start', key: 'name'},
       {title: 'Expiry date', align: 'end', key: 'expiry'},
       {title: 'Disease', align: 'end', key: 'disease'},
-      {title: 'Medicine cost', align: 'end', key: 'cost'},
+      {title: 'Cost', align: 'end', key: 'cost'},
       {title: 'Action', align: 'end', key: 'action'},
 
     ],
     message: "",
-    medicine_name: "",
+    name: "",
     editId: "",
     expiry: "",
     disease: "",
@@ -168,7 +170,7 @@ export default {
         snapshot.forEach((medicine) => {
           this.medicines.push({
             id: medicine.key,
-           medicine_name: medicine.val().medicine_name,
+           name: medicine.val().name,
             expiry: medicine.val().expiry,
             disease: medicine.val().disease,
             cost: medicine.val().cost,
@@ -177,8 +179,8 @@ export default {
       })
     },
     saveMedicine() {
-      if (this.medicine_name == "") {
-        this.message = "medicine_name cannot be blank"
+      if (this.name == "") {
+        this.message = "name cannot be blank"
         return
       }
       if (this.expiry == "") {
@@ -199,7 +201,7 @@ export default {
 
       //user object
       let medicine = {
-        medicine_name: this.medicine_name,
+        name: this.name,
         expiry: this.expiry,
         disease: this.disease,
         cost: this.cost,
@@ -216,7 +218,7 @@ export default {
 
       onValue(ref(fireDb, '/medicines'), (snapshot) => {
         snapshot.forEach((user) => {
-          if (user.val().medicine_name == this.medicine_name) {
+          if (user.val().name == this.name) {
             medicineInfo = user.val()
 
           }
@@ -239,7 +241,7 @@ export default {
     editMedicine(data: any) {
       this.actionEdit = true
       this.dialog = true
-      this.medicine_name = data.medicine_name
+      this.name = data.name
       this.expiry = data.expiry
       this.disease = data.disease
       this.cost = data.cost
@@ -250,10 +252,11 @@ export default {
       this.actionEdit = false
       this.loading = false
 
-      this.medicine_name = ''
+      this.name = ''
       this.expiry = ''
       this.disease = ''
       this.cost = ''
+      
 
     },
 
@@ -262,7 +265,10 @@ export default {
 
 this.dialog_confirm_delete=true
 this.id_to_delete=data.id
-this.nameToDelete=data.name   
+this.a=data.name
+this.b=data.expiry
+this.c=data.disease
+
 },
 continueDeleteNurse(){
 remove(ref(fireDb, '/medicines/' + this.id_to_delete))
