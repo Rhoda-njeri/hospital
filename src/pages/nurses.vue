@@ -316,8 +316,8 @@ this.nameToDelete=data.name
 
 },
 continueDeleteNurse(){
-remove(ref(fireDb, '/nurses/' + this.id_to_delete))
-this.dialog_confirm_delete=false
+      remove(ref(fireDb, '/nurses/' + this.id_to_delete))
+      this.dialog_confirm_delete=false
     },
 
     showNurse(data: any) {
