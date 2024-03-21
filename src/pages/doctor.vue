@@ -21,7 +21,7 @@
       <v-list-item
         append-icon="mdi-qualification"
         prepend-icon="mdi-library" 
-        title="qualification"
+        :title="'Qualification: '+doctor.qualification"
       ></v-list-item>
 
       <v-divider inset></v-divider>
@@ -29,7 +29,7 @@
       <v-list-item
         append-icon="mdi-experience"
         prepend-icon="mdi-calendar"
-        title="experience"
+        :title="'Experience: '+doctor.experience"
       ></v-list-item>
 
       <v-divider inset></v-divider>
@@ -37,7 +37,7 @@
       <v-list-item
         append-icon="mdi-salaryamount"
         prepend-icon="mdi-cash"
-        title="salaryamount"
+        :title="'SalaryAmount: '+doctor.salaryAmount"
       ></v-list-item>
 
       <v-divider inset></v-divider>
@@ -45,7 +45,7 @@
       <v-list-item
         append-icon="mdi-idnumber"
         prepend-icon="mdi-numeric"
-        title="idnumber"
+        :title="'IdNumber: '+doctor.idNumber"
       ></v-list-item>
 
     <v-divider inset></v-divider>
@@ -53,7 +53,7 @@
       <v-list-item
         append-icon="mdi-employmentdate"
         prepend-icon="mdi-calendar"
-       :title="data.employmentdate"
+       :title="doctor.employmentDate"
       ></v-list-item>
     </v-list>
    

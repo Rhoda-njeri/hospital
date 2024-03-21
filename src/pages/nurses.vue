@@ -7,7 +7,7 @@
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editNurse(item)">mdi-pencil</v-icon>
       <v-icon size="small" @click="deleteNurse(item)">mdi-delete</v-icon>
-      <v-icon size="small" @click="showNurse(item.id)">mdi-eye</v-icon>
+      <v-icon size="small" @click="showNurse(item)">mdi-eye</v-icon>
     </template>
   </v-data-table>
   <v-dialog
@@ -320,7 +320,8 @@ remove(ref(fireDb, '/nurses/' + this.id_to_delete))
 this.dialog_confirm_delete=false
     },
 
-    showNurse(data: string) {
+    showNurse(data: any) {
+      localStorage.setItem('nurse',JSON.stringify(data))
       console.log(data)
     }
 
