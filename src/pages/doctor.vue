@@ -19,33 +19,44 @@
     </v-card-item>
     <v-list>
       <v-list-item
-        append-icon="mdi-message-text"
-        prepend-icon="mdi-phone"
-        title="(650) 555-1234"
+        append-icon="mdi-qualification"
+        prepend-icon="mdi-library" 
+        title="qualification"
       ></v-list-item>
 
       <v-divider inset></v-divider>
 
       <v-list-item
-        append-icon="mdi-message-text"
-        prepend-icon="mdi-phone"
-        title="(323) 555-6789"
+        append-icon="mdi-experience"
+        prepend-icon="mdi-calendar"
+        title="experience"
       ></v-list-item>
 
       <v-divider inset></v-divider>
 
       <v-list-item
-        prepend-icon="mdi-email"
-        title="mcbeal@example.com"
+        append-icon="mdi-salaryamount"
+        prepend-icon="mdi-cash"
+        title="salaryamount"
       ></v-list-item>
 
       <v-divider inset></v-divider>
 
       <v-list-item
-        prepend-icon="mdi-map-marker"
-        title="Orlando, FL 79938"
+        append-icon="mdi-idnumber"
+        prepend-icon="mdi-numeric"
+        title="idnumber"
+      ></v-list-item>
+
+    <v-divider inset></v-divider>
+
+      <v-list-item
+        append-icon="mdi-employmentdate"
+        prepend-icon="mdi-calendar"
+       :title="data.employmentdate"
       ></v-list-item>
     </v-list>
+   
 
   </v-card>
 </template>
