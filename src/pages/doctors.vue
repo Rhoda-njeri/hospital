@@ -296,14 +296,14 @@ export default {
       this.dialog = false
       this.actionEdit=false
       this.loading=false
-      
+
     this.name=''
     this.qualification=''
     this.idNumber=''
     this.experience=''
     this.salaryAmount=''
     this.employmentDate=''
-    
+
     },
     deleteDoctor(data: any) {
 
@@ -321,7 +321,7 @@ export default {
 
     },
     showDoctor(data: any) {
-      localStorage.setItem('doctor',data)
+      localStorage.setItem('doctor',JSON.stringify(data))
       this.$router.push('/doctor')
     }
 
