@@ -127,7 +127,7 @@
       prepend-icon="mdi-mdi-mother-nurse"
       title="Confirm">
       <v-card-text>
-      Are you sure to delete {{a}} with {{b}} earning {{c}}
+        Are you sure to delete {{ a }} with {{ b }} earning {{ c }}
       </v-card-text>
 
       <v-divider></v-divider>
@@ -156,19 +156,19 @@
 <script lang="ts">
 import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
-import { c } from "unplugin-vue-router/dist/options-8dbadba3.js";
+import {c} from "unplugin-vue-router/dist/options-8dbadba3.js";
 
 export default {
   data: () => ({
     dialog: false,
-    dialog_confirm_delete:false,
-    id_to_delete:"",
-    a:"",
-    b:"",
-    c:"",
-    nameToDelete:"",
+    dialog_confirm_delete: false,
+    id_to_delete: "",
+    a: "",
+    b: "",
+    c: "",
+    nameToDelete: "",
     loading: false,
-    actionEdit:false,
+    actionEdit: false,
     headers: [
       {title: 'Name', align: 'start', key: 'name'},
       {title: 'Qualifications', align: 'end', key: 'qualification'},
@@ -180,7 +180,7 @@ export default {
     ],
     message: "",
     name: "",
-    editId:"",
+    editId: "",
     qualification: "",
     idNumber: "",
     experience: "",
@@ -195,7 +195,7 @@ export default {
   , methods: {
     fetchNurses() {
       onValue(ref(fireDb, '/nurses'), (snapshot) => {
-        this.nurses=[]
+        this.nurses = []
         snapshot.forEach((nurse) => {
           this.nurses.push({
             id: nurse.key,
@@ -250,8 +250,8 @@ export default {
         salaryAmount: this.salaryAmount
       }
 
-      if(this.actionEdit){
-        update(ref(fireDb, '/nurses/'+this.editId),nurse)
+      if (this.actionEdit) {
+        update(ref(fireDb, '/nurses/' + this.editId), nurse)
         this.closeDialog()
         return
       }
@@ -281,47 +281,47 @@ export default {
       });
     },
     editNurse(data: any) {
-      this.actionEdit=true
-      this.dialog=true
-      this.name=data.name
-      this.qualification=data.qualification
-      this.experience=data.experience
-      this.salaryAmount=data.salaryAmount
-      this.idNumber=data.idNumber
-      this.employmentDate=data.employmentDate
-      this.editId=data.id
+      this.actionEdit = true
+      this.dialog = true
+      this.name = data.name
+      this.qualification = data.qualification
+      this.experience = data.experience
+      this.salaryAmount = data.salaryAmount
+      this.idNumber = data.idNumber
+      this.employmentDate = data.employmentDate
+      this.editId = data.id
     },
-    closeDialog(){
+    closeDialog() {
       this.dialog = false
-      this.actionEdit=false
-      this.loading=false
+      this.actionEdit = false
+      this.loading = false
 
-    this.name=''
-    this.qualification=''
-    this.idNumber=''
-    this.experience=''
-    this.salaryAmount=''
-    this.employmentDate=''
+      this.name = ''
+      this.qualification = ''
+      this.idNumber = ''
+      this.experience = ''
+      this.salaryAmount = ''
+      this.employmentDate = ''
 
     },
 
-      deleteNurse(data: any) {
+    deleteNurse(data: any) {
 
-this.dialog_confirm_delete=true
-this.id_to_delete=data.id
-this.a=data.name
-this.b=data.qualification
-this.c=data.salaryAmount
-this.nameToDelete=data.name
+      this.dialog_confirm_delete = true
+      this.id_to_delete = data.id
+      this.a = data.name
+      this.b = data.qualification
+      this.c = data.salaryAmount
+      this.nameToDelete = data.name
 
-},
-continueDeleteNurse(){
+    },
+    continueDeleteNurse() {
       remove(ref(fireDb, '/nurses/' + this.id_to_delete))
-      this.dialog_confirm_delete=false
+      this.dialog_confirm_delete = false
     },
 
     showNurse(data: any) {
-      localStorage.setItem('nurse',JSON.stringify(data))
+      localStorage.setItem('nurse', JSON.stringify(data))
       this.$router.push('/nurse')
     }
 

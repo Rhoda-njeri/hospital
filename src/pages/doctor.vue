@@ -20,7 +20,7 @@
     <v-list>
       <v-list-item
         append-icon="mdi-qualification"
-        prepend-icon="mdi-library" 
+        prepend-icon="mdi-library"
         :title="'Qualification: '+doctor.qualification"
       ></v-list-item>
 
@@ -48,15 +48,15 @@
         :title="'IdNumber: '+doctor.idNumber"
       ></v-list-item>
 
-    <v-divider inset></v-divider>
+      <v-divider inset></v-divider>
 
       <v-list-item
         append-icon="mdi-employmentdate"
         prepend-icon="mdi-calendar"
-       :title="doctor.employmentDate"
+        :title="doctor.employmentDate"
       ></v-list-item>
     </v-list>
-   
+
 
   </v-card>
 </template>

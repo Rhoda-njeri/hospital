@@ -6,9 +6,9 @@
     item-value="name">
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editPatient(item)">mdi-pencil</v-icon>
-    <v-icon size="small" @click="deletePatient(item)">mdi-delete</v-icon>
-    <v-icon size="small" @click="showPatient(item)">mdi-eye</v-icon>
-  </template>
+      <v-icon size="small" @click="deletePatient(item)">mdi-delete</v-icon>
+      <v-icon size="small" @click="showPatient(item)">mdi-eye</v-icon>
+    </template>
   </v-data-table>
   <v-dialog
     v-model="dialog"
@@ -66,8 +66,8 @@
             required
             v-model="age"
           ></v-select>
-      
-          
+
+
           <v-col
             cols="12"
             md="4"
@@ -92,7 +92,7 @@
             ></v-text-field>
           </v-col>
 
-          
+
           <small class="text-caption text-decoration-none text-red">{{ message }}</small>
         </v-row>
       </v-card-text>
@@ -120,16 +120,15 @@
   </v-dialog>
 
 
-
-<v-dialog
+  <v-dialog
     v-model="dialog_confirm_delete"
     max-width="600">
     <v-card
       prepend-icon="mdi-wheelchair"
       title="Confirm">
       <v-card-text>
-        Are you sure to delete {{a}} aged {{b}} with contact {{c}}
-      </v-card-text>           
+        Are you sure to delete {{ a }} aged {{ b }} with contact {{ c }}
+      </v-card-text>
 
       <v-divider></v-divider>
 
@@ -143,13 +142,13 @@
         ></v-btn>
 
         <v-btn
-        color="primary"
+          color="primary"
           text="Delete"
           variant="tonal"
           :loading="loading"
           @click="continueDeletePatient"
-          ></v-btn>
-        </v-card-actions>
+        ></v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -161,14 +160,14 @@ import {fireDb} from "@/utils/constants"
 export default {
   data: () => ({
     dialog: false,
-    dialog_confirm_delete:false,
-    id_to_delete:"",
-    a:"",
-    b:"",
-    c:"",
+    dialog_confirm_delete: false,
+    id_to_delete: "",
+    a: "",
+    b: "",
+    c: "",
     loading: false,
-    actionEdit:false,
-    nameToDelete:"",
+    actionEdit: false,
+    nameToDelete: "",
     headers: [
       {title: 'First Name', align: 'start', key: 'first_name'},
       {title: 'Middle Name', align: 'end', key: 'middle_name'},
@@ -177,15 +176,15 @@ export default {
       {title: 'Location', align: 'end', key: 'location'},
       {title: 'Contact', align: 'end', key: 'contact'},
       {title: 'Action', align: 'end', key: 'action'},
-    
+
     ],
     message: "",
     first_name: "",
     middle_name: "",
     last_name: "",
-    editId:"",
-    age:"",
-    location:"",
+    editId: "",
+    age: "",
+    location: "",
     contact: "",
     patients: [] as any,
   }),
@@ -197,7 +196,7 @@ export default {
     fetchPatients() {
       onValue(ref(fireDb, '/patients'), (snapshot) => {
 
-        this.patients=[]
+        this.patients = []
         snapshot.forEach((patient) => {
           this.patients.push({
             id: patient.key,
@@ -207,7 +206,7 @@ export default {
             age: patient.val().age,
             location: patient.val().location,
             contact: patient.val().contact,
-            
+
           } as any)
         })
       })
@@ -221,7 +220,7 @@ export default {
         this.message = "Middle Name cannot be blank"
         return
       }
-      if (this.last_name== "") {
+      if (this.last_name == "") {
         this.message = "Last Name cannot be blank"
         return
       }
@@ -242,19 +241,19 @@ export default {
       this.loading = true
 
       //user object
-       let patient = {
+      let patient = {
         first_name: this.first_name,
-      middle_name: this.middle_name,
-      last_name: this.last_name,
-      age: this.age,
-      location: this.location,
-      contact: this.contact,
-      action: this.actionEdit
-      
+        middle_name: this.middle_name,
+        last_name: this.last_name,
+        age: this.age,
+        location: this.location,
+        contact: this.contact,
+        action: this.actionEdit
+
       }
 
-      if(this.actionEdit){
-        update(ref(fireDb, '/medicines/'+this.editId),patient)
+      if (this.actionEdit) {
+        update(ref(fireDb, '/medicines/' + this.editId), patient)
         this.closeDialog()
         return
       }
@@ -262,9 +261,9 @@ export default {
       let patientInfo: any = undefined
 
       onValue(ref(fireDb, '/patients'), (snapshot) => {
-      snapshot.forEach((user) => {
-        if (user.val().name == this.first_name) {
-          patientInfo = user.val()
+        snapshot.forEach((user) => {
+          if (user.val().name == this.first_name) {
+            patientInfo = user.val()
 
           }
         })
@@ -284,44 +283,39 @@ export default {
       });
     },
     editPatient(data: any) {
-      this.actionEdit=true
-      this.dialog=true
-      this.first_name=data.first_name
-      this.middle_name=data.middle_name
-      this.last_name=data.last_name
-      this.age=data.age
-      this.location=data.location
-      this.contact=data.contact
-      this.editId=data.id                                                                                        
+      this.actionEdit = true
+      this.dialog = true
+      this.first_name = data.first_name
+      this.middle_name = data.middle_name
+      this.last_name = data.last_name
+      this.age = data.age
+      this.location = data.location
+      this.contact = data.contact
+      this.editId = data.id
     },
-    closeDialog(){
+    closeDialog() {
       this.dialog = false
-      this.actionEdit=false
-      this.loading=false
-      
-    this.first_name=''
-    this.middle_name=''
-    this.last_name=''
-    this.age=''
-      this.location=''
-      this.contact=''
-    
-    
+      this.actionEdit = false
+      this.loading = false
+      this.first_name = ''
+      this.middle_name = ''
+      this.last_name = ''
+      this.age = ''
+      this.location = ''
+      this.contact = ''
+    },
+    deletePatient(data: any) {
+      this.dialog_confirm_delete = true
+      this.id_to_delete = data.id
+      this.a = data.first_name
+      this.b = data.age
+      this.c = data.contact
+      this.nameToDelete = data.first_name + " " + data.middle_name + " " + data.last_name
     },
 
-           deletePatient(data: any) {
-
-this.dialog_confirm_delete=true
-this.id_to_delete=data.id
-this.a=data.first_name
-this.b=data.age
-this.c=data.contact
-this.nameToDelete=data.first_name +" "+ data.middle_name +" "+data.last_name
-},
-
-continueDeletePatient(){
-remove(ref(fireDb, '/patients/' + this.id_to_delete))
-this.dialog_confirm_delete=false
+    continueDeletePatient() {
+      remove(ref(fireDb, '/patients/' + this.id_to_delete))
+      this.dialog_confirm_delete = false
     },
     showPatient(data: string) {
       console.log(data)
