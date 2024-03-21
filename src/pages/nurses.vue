@@ -322,7 +322,7 @@ continueDeleteNurse(){
 
     showNurse(data: any) {
       localStorage.setItem('nurse',JSON.stringify(data))
-      console.log(data)
+      this.$router.push('/nurse')
     }
 
   },

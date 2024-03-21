@@ -45,7 +45,7 @@
         <v-list-item
           append-icon="mdi-idnumber"
           prepend-icon="mdi-numeric"
-          :title="'IdNumber: '+nurse.idNumber"
+          :title="'Id Number: '+nurse.idNumber"
         ></v-list-item>
   
       <v-divider inset></v-divider>
@@ -53,7 +53,7 @@
         <v-list-item
           append-icon="mdi-employmentdate"
           prepend-icon="mdi-calendar"
-         :title="nurse.employmentDate"
+         :title="'Employment Date: '+nurse.employmentDate"
         ></v-list-item>
       </v-list>
      
