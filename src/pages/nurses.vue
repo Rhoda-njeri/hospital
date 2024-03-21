@@ -295,14 +295,14 @@ export default {
       this.dialog = false
       this.actionEdit=false
       this.loading=false
-      
+
     this.name=''
     this.qualification=''
     this.idNumber=''
     this.experience=''
     this.salaryAmount=''
     this.employmentDate=''
-    
+
     },
 
       deleteNurse(data: any) {
