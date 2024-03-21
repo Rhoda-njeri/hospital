@@ -1,7 +1,7 @@
 <template>
     <v-container>
       <v-row>
-        <v-col cols="12" md="3">
+        <v-col cols="90000" md="1000">
           <v-card prepend-icon="mdi-doctor">
             <template v-slot:title>{{ data }}</template>
             <v-card-text>Doctors</v-card-text>

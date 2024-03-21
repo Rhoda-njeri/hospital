@@ -7,7 +7,7 @@
     <template v-slot:[`item.action`]="{ item }">
       <v-icon size="small" @click="editDoctor(item)">mdi-pencil</v-icon>
       <v-icon size="small" @click="deleteDoctor(item)">mdi-delete</v-icon>
-      <v-icon size="small" @click="showDoctor(item.id)">mdi-eye</v-icon>
+      <v-icon size="small" @click="showDoctor(item)">mdi-eye</v-icon>
     </template>
   </v-data-table>
   <v-dialog
@@ -320,8 +320,9 @@ export default {
       this.dialog_confirm_delete=false
 
     },
-    showDoctor(data: string) {
-      console.log(data)
+    showDoctor(data: any) {
+      localStorage.setItem('doctor',data)
+      this.$router.push('/doctor')
     }
 
   },
