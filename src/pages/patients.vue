@@ -317,8 +317,10 @@ export default {
       remove(ref(fireDb, '/patients/' + this.id_to_delete))
       this.dialog_confirm_delete = false
     },
-    showPatient(data: string) {
-      console.log(data)
+    
+      showPatient(data: any) {
+        localStorage.setItem('patient', JSON.stringify(data))
+        this.$router.push('/patient')
     }
 
   },

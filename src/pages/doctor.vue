@@ -53,7 +53,7 @@
       <v-list-item
         append-icon="mdi-employmentdate"
         prepend-icon="mdi-calendar"
-        :title="doctor.employmentDate"
+        :title="'employmentDate: '+doctor.employmentDate"
       ></v-list-item>
     </v-list>
 
