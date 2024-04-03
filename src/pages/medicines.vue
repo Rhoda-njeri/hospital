@@ -123,7 +123,7 @@
           text="Delete"
           variant="tonal"
           :loading="loading"
-          @click="continueDeleteNurse"
+          @click="continueDeleteMedicine"
         ></v-btn>
     </v-card-actions>
     </v-card>

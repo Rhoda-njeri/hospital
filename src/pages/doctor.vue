@@ -4,7 +4,7 @@
     max-width="500">
     <v-card-item class="bg-cyan-darken-1">
       <v-card-title>
-        <span class="text-h5">{{ doctor.name }}</span>
+        <span class="text-h5">{{ doctorname }}</span>
       </v-card-title>
       <template v-slot:append>
         <v-defaults-provider

@@ -16,14 +16,14 @@
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
         class="text-none font-weight-regular"
-        prepend-icon="mdi-wheelchair"
-        text="Add patient"
+        prepend-icon="mdi-wheel-chair"
+        text="Add Patient"
         variant="tonal"
         v-bind="activatorProps"
       ></v-btn>
     </template>
-    <v-card
-      prepend-icon="mdi-wheelchair"
+      <v-card
+      prepend-icon="mdi-wheel-chair"
       title="Patient Details">
       <v-card-text>
         <v-row dense>
@@ -59,15 +59,17 @@
               required></v-text-field>
           </v-col>
 
-          <v-select
-            :items="['0-17', '18-29', '30-54', '54+']"
-            label="Age"
-            variant="outlined"
-            required
-            v-model="age"
-          ></v-select>
-
-
+          <v-col
+            cols="12"
+            md="4"
+            sm="6">
+            <v-text-field
+              label="Age"
+              required
+              v-model="age"
+              variant="outlined"
+            ></v-text-field>
+          </v-col>
           <v-col
             cols="12"
             md="4"
@@ -84,6 +86,7 @@
             cols="12"
             md="4"
             sm="6">
+
             <v-text-field
               label="Contact"
               required
@@ -91,7 +94,6 @@
               variant="outlined"
             ></v-text-field>
           </v-col>
-
 
           <small class="text-caption text-decoration-none text-red">{{ message }}</small>
         </v-row>
@@ -119,15 +121,14 @@
     </v-card>
   </v-dialog>
 
-
   <v-dialog
     v-model="dialog_confirm_delete"
     max-width="600">
     <v-card
-      prepend-icon="mdi-wheelchair"
+      prepend-icon="mdi-patient"
       title="Confirm">
       <v-card-text>
-        Are you sure to delete {{ a }} aged {{ b }} with contact {{ c }}
+        Are you sure to delete {{ a }} with contact {{ b }} located at {{ c }}
       </v-card-text>
 
       <v-divider></v-divider>
@@ -151,8 +152,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-</template>
-
+  </template>
 <script lang="ts">
 import {push, ref, onValue, update, remove} from "firebase/database"
 import {fireDb} from "@/utils/constants"
@@ -162,12 +162,13 @@ export default {
     dialog: false,
     dialog_confirm_delete: false,
     id_to_delete: "",
+    editContact:  "",
     a: "",
     b: "",
     c: "",
+    nameToDelete: "",
     loading: false,
     actionEdit: false,
-    nameToDelete: "",
     headers: [
       {title: 'First Name', align: 'start', key: 'first_name'},
       {title: 'Middle Name', align: 'end', key: 'middle_name'},
@@ -176,13 +177,12 @@ export default {
       {title: 'Location', align: 'end', key: 'location'},
       {title: 'Contact', align: 'end', key: 'contact'},
       {title: 'Action', align: 'end', key: 'action'},
-
+    
     ],
     message: "",
     first_name: "",
     middle_name: "",
     last_name: "",
-    editId: "",
     age: "",
     location: "",
     contact: "",
@@ -213,30 +213,32 @@ export default {
     },
     savePatient() {
       if (this.first_name == "") {
-        this.message = "First Name cannot be blank"
+        this.message = "first_name cannot be blank"
         return
       }
       if (this.middle_name == "") {
-        this.message = "Middle Name cannot be blank"
+        this.message = "middle_Name cannot be blank"
         return
       }
       if (this.last_name == "") {
-        this.message = "Last Name cannot be blank"
+        this.message = "last_name cannot be blank"
         return
       }
       if (this.age == "") {
-        this.message = "Age cannot be blank"
-        return
-      }
-      if (this.location == "") {
-        this.message = "Location cannot be blank"
-        return
-      }
-      if (this.contact == "") {
-        this.message = "Contact cannot be blank"
+        this.message = "age cannot be blank"
         return
       }
 
+      if (this.location== "") {
+        this.message = "location cannot be blank"
+        return
+      }
+
+
+      if (this.contact == "") {
+        this.message = "contact cannot be blank"
+        return
+      }
 
       this.loading = true
 
@@ -248,12 +250,10 @@ export default {
         age: this.age,
         location: this.location,
         contact: this.contact,
-        action: this.actionEdit
-
       }
 
       if (this.actionEdit) {
-        update(ref(fireDb, '/medicines/' + this.editId), patient)
+        update(ref(fireDb, '/patients/' + this.editContact), patient)
         this.closeDialog()
         return
       }
@@ -262,13 +262,13 @@ export default {
 
       onValue(ref(fireDb, '/patients'), (snapshot) => {
         snapshot.forEach((user) => {
-          if (user.val().name == this.first_name) {
+          if (user.val().contact == this.contact) {
             patientInfo = user.val()
 
           }
         })
         if (patientInfo != undefined) {
-          this.message = "patient already registered"
+          this.message = "Patient already registered"
           return;
         } else {
           //inserting user to firebase db
@@ -282,48 +282,54 @@ export default {
         onlyOnce: true
       });
     },
-    editPatient(data: any) {
-      this.actionEdit = true
-      this.dialog = true
+    editPatient(data: any) {                                 
       this.first_name = data.first_name
       this.middle_name = data.middle_name
       this.last_name = data.last_name
       this.age = data.age
       this.location = data.location
       this.contact = data.contact
-      this.editId = data.id
+      this.editContact = data.Contact
+      this.actionEdit = true
+      this.dialog = true
     },
     closeDialog() {
       this.dialog = false
       this.actionEdit = false
       this.loading = false
+
       this.first_name = ''
       this.middle_name = ''
       this.last_name = ''
       this.age = ''
       this.location = ''
       this.contact = ''
+
     },
+
     deletePatient(data: any) {
+
       this.dialog_confirm_delete = true
       this.id_to_delete = data.id
       this.a = data.first_name
-      this.b = data.age
-      this.c = data.contact
-      this.nameToDelete = data.first_name + " " + data.middle_name + " " + data.last_name
-    },
+      this.b = data.contact
+      this.c = data.location
+      this.nameToDelete = data.first_name + " "+data.middle_name + " " + data.last_name
 
+    },
     continueDeletePatient() {
       remove(ref(fireDb, '/patients/' + this.id_to_delete))
       this.dialog_confirm_delete = false
     },
-    
-      showPatient(data: any) {
-        localStorage.setItem('patient', JSON.stringify(data))
-        this.$router.push('/patient')
+
+    showPatient(data: any) {
+      localStorage.setItem('patient', JSON.stringify(data))
+      this.$router.push('/patient')
     }
 
   },
 }
 
 </script>
+
+  

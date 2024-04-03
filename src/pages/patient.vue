@@ -46,12 +46,28 @@
         <v-divider inset></v-divider>
   
     </v-card>
+    <v-data-table
+      :headers="headers"
+      :items="patients"
+      height="400"
+      item-value="name">
+      <template v-slot:[`item.action`]="{ item }">
+        <v-icon size="small" @click="editPatient(item)">mdi-pencil</v-icon>
+        <v-icon size="small" @click="deletePatient(item)">mdi-delete</v-icon>
+        <v-icon size="small" @click="showPatient(item)">mdi-eye</v-icon>
+      </template>
+    </v-data-table>
   </template>
+
   <script lang="ts">
   
   export default {
     data: () => ({
         patient: {} as any,
+        headers:    [   {title: 'Disease', align: 'start', key: 'disease'},
+        {title: 'Cost', align: 'end', key: 'cost'},
+        {title: 'Date of Treatment', align: 'end', key: 'date of treatment'},
+      ],
       }
     ), mounted() {
       this.fetchData();

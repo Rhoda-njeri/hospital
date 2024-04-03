@@ -174,7 +174,7 @@ export default {
       {title: 'Names', align: 'start', key: 'name'},
       {title: 'Qualifications', align: 'end', key: 'qualification'},
       {title: 'Experience', align: 'end', key: 'experience'},
-      {title: 'Salary Amount', align: 'end', key: 'salaryAmount'},
+      {title: 'SalaryAmount', align: 'end', key: 'salaryAmount'},
       {title: 'Id Number', align: 'end', key: 'idNumber'},
       {title: 'Employment Date', align: 'end', key: 'employmentDate'},
       {title: 'Action', align: 'end', key: 'action'},
