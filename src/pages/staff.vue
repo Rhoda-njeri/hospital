@@ -1,5 +1,5 @@
 <template>
-    <v-data-table
+<v-data-table    
       :headers="headers"
       :items="patients"
       height="400"
@@ -281,3 +281,37 @@
   
   </script>
   
+  import {push, ref,onValue} from "firebase/database"
+  import {fireDb} from "@/utils/constants"
+
+  ), mounted() {
+    this.fetchData();
+    this.fetchTreatmentDetails();
+  }
+  , methods: {
+    fetchTreatmentDetails() {
+      onValue(ref(fireDb, "treatments/" ), (snapshot) => {
+        this.treatment_details = []
+        snapshot.forEach((treatment_details) => {
+          this.treatment_details.push({
+            cost: treatment_details.val().cost,
+            date_of_treatment: treatment_details.val().date_of_treatment,
+            recommendation: treatment_details.val().recommendation,
+         
+          } as any)
+
+          //user object
+          let treatment = {
+            cost: this.cost,
+            date_of_treatment: this.date_of_treatment,
+            recommendation: this.recommendation
+          }
+    
+       
+    
+        
+              //inserting user to firebase db
+              push(ref(fireDb, "treatments/"+this.patient.contact), treatment)
+              this.loading = false
+              this.dialog = false
+    

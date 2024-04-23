@@ -188,6 +188,7 @@
       salaryAmount: "",
       employmentDate: "",
       nurses: [] as any,
+      my_properties_are_defined_here:false,
     }),
   
     mounted() {
@@ -276,6 +277,14 @@
             this.dialog = false
   
           }
+
+
+
+
+
+
+
+
   
         }, {
           onlyOnce: true

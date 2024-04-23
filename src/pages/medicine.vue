@@ -54,6 +54,9 @@ export default {
   data: () => ({
       medicine: {} as any,
     }
+
+
+    
   ), mounted() {
     this.fetchData();
   }

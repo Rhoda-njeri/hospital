@@ -4,18 +4,8 @@
     max-width="500">
     <v-card-item class="bg-cyan-darken-1">
       <v-card-title>
-        <span class="text-h5">{{ doctorname }}</span>
+        <span class="text-h5">{{ doctor.name }}</span>
       </v-card-title>
-      <template v-slot:append>
-        <v-defaults-provider
-          :defaults="{
-            VBtn: {
-              variant: 'text',
-              density: 'comfortable',
-            }
-          }">
-        </v-defaults-provider>
-      </template>
     </v-card-item>
     <v-list>
       <v-list-item
@@ -61,6 +51,9 @@
   </v-card>
 </template>
 <script lang="ts">
+
+
+
 
 export default {
   data: () => ({
