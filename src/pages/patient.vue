@@ -197,6 +197,8 @@ max-width="600">
 </v-card>
 </v-dialog>
 
+
+
   <v-dialog
     v-model="dialog_confirm_delete"
     max-width="600">
@@ -234,18 +236,21 @@ max-width="600">
 
   <script lang="ts">
   
-  import {push, ref,onValue,remove} from "firebase/database"
+  import {push, ref, onValue, update, remove} from "firebase/database"
   import {fireDb} from "@/utils/constants"
+
 
   export default {
     data: () => ({
         dialog:false,
-        cost: "",
-        date: "",
+        cost: '',
+        date: '',
         action_edit:true,
-        message:"",
+        message:'',
+        editId:'',
         dialog_confirm_delete:false,
         id_to_delete:'',
+        name_to_delete: "",
         treatment_details:[] as any,
         headers: [
               {title: 'Cost', align: 'end', key: 'cost'},
@@ -268,6 +273,7 @@ max-width="600">
           this.treatment_details = []
           snapshot.forEach((treatment_detail) => {
             this.treatment_details.push({
+              id: treatment_detail.key,
               cost: treatment_detail.val().cost,
               date: treatment_detail.val().date,
               recommendation: treatment_detail.val().recommendation,
@@ -294,39 +300,55 @@ max-width="600">
         this.loading = true
   
         //user object
-        let treatment = {
+        let treatment_detail = {
           cost: this.cost,
           date: this.date,
-          recommendation: this.recommendation
+          recommendation: this.recommendation,
         }
   
-     
-  
-      
+     if (this.action_edit) {
+          update(ref(fireDb, 'treatments/' +this.patient.contact+'/'+ this.editId), treatment_detail)
+          this.closeDialog()
+          return
+        }
+   
             //inserting user to firebase db
-            push(ref(fireDb, "treatments/"+this.patient.contact), treatment)
+            push(ref(fireDb, "treatments/"+this.patient.contact), treatment_detail)
             this.loading = false
             this.dialog = false
         
 
       
       },
-      editTreatmentDetails(data: any){
-
-      alert('sasa Rhoda')
-      },
       continueDeleteTreatmentDetails() {
-        remove(ref(fireDb, '/treatment_details/' + this.id_to_delete))
+        remove(ref(fireDb, 'treatments/' +this.patient.contact+'/'+ this.id_to_delete))
         this.dialog_confirm_delete = false
       },
       fetchData() {
         this.patient = JSON.parse(localStorage.getItem('patient') as string)
       },
-      closeDialog(){
-      
 
+      editTreatmentDetails(data: any) {                                 
+        this.cost = data.cost
+        this.date = data.date
+        this.recommendation= data.recommendation
+        this.action_edit = true
+        this.editId = data.id
+        this.dialog = true
+    },
+    closeDialog() {
+      this.cost = ''
+      this.date = ''
+      this.recommendation = '' 
+      this.dialog = false
+      this.action_edit = false
+      this.loading = false
       },
       deleteTreatmentDetails(data: any){
+        this.dialog_confirm_delete = true
+        this.id_to_delete = data.id
+
+
     }}
   
   }

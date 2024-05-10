@@ -289,7 +289,7 @@ export default {
       this.age = data.age
       this.location = data.location
       this.contact = data.contact
-      this.editContact = data.Contact
+      this.editContact = data.contact
       this.actionEdit = true
       this.dialog = true
     },

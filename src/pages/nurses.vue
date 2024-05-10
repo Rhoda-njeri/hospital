@@ -258,7 +258,7 @@
           return
         }
         // check if NURSE ID exist
-        let nurserInfo: any = undefined
+        let nurseInfo: any = undefined
   
         onValue(ref(fireDb, '/nurses'), (snapshot) => {
           snapshot.forEach((user) => {
